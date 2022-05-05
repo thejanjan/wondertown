@@ -2,5 +2,5 @@
 
 [ext_resource path="res://level/LevelManager.gd" type="Script" id=1]
 
-[node name="Node" type="Node"]
+[node name="LevelManager" type="Spatial"]
 script = ExtResource( 1 )

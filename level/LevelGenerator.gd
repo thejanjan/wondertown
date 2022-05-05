@@ -9,12 +9,24 @@ in order create an entire level instance.
 """
 
 const LevelTileset = preload("res://level/LevelTileset.gd")
+var level_node = null
 var tileset_node = null
 
 
-func add_tileset(tileset):
+func add_level(level):
 	"""
-	Adds a tileset to the LevelManager.
+	Adds a level node to the LevelGenerator.
+	"""
+	# Set the level node.
+	self.level_node = level
+	
+	# Add the tileset.
+	self._add_tileset(level.get_node("LevelTileset"))
+
+
+func _add_tileset(tileset):
+	"""
+	Adds a tileset to the LevelGenerator.
 	"""
 	assert(tileset is LevelTileset)
 	
@@ -22,9 +34,9 @@ func add_tileset(tileset):
 	self.tileset_node = tileset
 
 
-func build_tileset():
+func build_level():
 	"""
-	Builds a tileset from the currently set tileset.
+	Builds a level from the currently set tileset.
 	"""
 	assert(self.tileset_node)
 	
@@ -41,4 +53,4 @@ func build_tileset():
 			self.add_child(object)
 	
 	# Ok, now hide the level.
-	# self.tileset_node.visible = false
+	self.tileset_node.visible = false
