@@ -8,6 +8,9 @@ The job of the LevelDictionary is to keep up with the full tilemap of the level.
 Has accessor methods to view different tile IDs.
 """
 
+# A complete list of all objects.
+var _all_objects = []
+
 # The object ID dictionary stores object IDs in this pattern:
 # {
 # 	GameNodeIds.GameNodeID.TestBox: [instance, instance, ..., instance],
@@ -15,6 +18,15 @@ Has accessor methods to view different tile IDs.
 # ...
 # }
 var _object_id_dict = {}
+
+# The object ID dictionary stores object IDs in this pattern:
+# {
+#	1: {
+#		3: [instance, instance]
+# 	},
+# }
+# refers to the 2 instances at position (1, 3).
+var _object_position_dict = {}
 
 
 func _ready():
@@ -31,3 +43,47 @@ func add_game_node(node):
 	"""
 	# TODO - refactor function call to take the GameNodeID from the game node.
 	_object_id_dict[node.get_game_node_id()].append(node)
+	_all_objects.append(node)
+
+
+func _process(delta):
+	build_position_dict()
+
+	
+func build_position_dict():
+	"""
+	Figures out where each object is positionally.
+	"""
+	# Reset our dictionary.
+	_object_position_dict = {}
+	
+	# Iterate over all objects.
+	for object in _all_objects:
+		var xpos = round(object.get_xpos())
+		var ypos = round(object.get_ypos())
+		
+		# Get the xpos dictionary.
+		if not _object_position_dict.get(xpos):
+			_object_position_dict[xpos] = {}
+		var xpos_dict = _object_position_dict[xpos]
+		
+		# Init the ypos list.
+		if not xpos_dict.get(ypos):
+			xpos_dict[ypos] = []
+		
+		# Add the object to the ypost list.
+		xpos_dict[ypos].append(object)
+	
+"""
+Dictionary accessors
+"""
+
+func get_objects_at_pos(xpos, ypos):
+	"""
+	Returns a list of all objects at a given position.
+	"""
+	if not _object_position_dict.get(xpos):
+		return []
+	if not _object_position_dict[xpos].get(ypos):
+		return []
+	return _object_position_dict[xpos][ypos]

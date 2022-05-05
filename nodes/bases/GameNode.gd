@@ -58,9 +58,14 @@ func set_gamenode_pos(xpos, ypos, translate=false):
 func move_pos(xpos_diff, ypos_diff, translate=false):
 	set_gamenode_pos(self.xpos + xpos_diff, self.ypos + ypos_diff, translate)
 	
-
 func get_pos_as_vector():
 	return Vector3(xpos, 0, ypos)
+	
+func get_xpos():
+	return xpos
+	
+func get_ypos():
+	return ypos
 
 """
 FSM pattern
