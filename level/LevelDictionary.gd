@@ -28,6 +28,9 @@ var _object_id_dict = {}
 # refers to the 2 instances at position (1, 3).
 var _object_position_dict = {}
 
+# The tile node dict works the same way as above.
+var _tile_position_dict = {}
+
 
 func _ready():
 	"""
@@ -44,6 +47,22 @@ func add_game_node(node):
 	# TODO - refactor function call to take the GameNodeID from the game node.
 	_object_id_dict[node.get_game_node_id()].append(node)
 	_all_objects.append(node)
+
+
+func add_tile_node(tile):
+	"""
+	Adds a tile node to the LevelDictionary.
+	"""
+	var xpos = round(tile.get_xpos())
+	var ypos = round(tile.get_ypos())
+	
+	# Get the xpos dictionary.
+	if not _tile_position_dict.get(xpos):
+		_tile_position_dict[xpos] = {}
+	var xpos_dict = _tile_position_dict[xpos]
+	
+	# Set this tile to be at this ypos.
+	xpos_dict[ypos] = tile
 
 
 func _process(delta):
@@ -87,3 +106,15 @@ func get_objects_at_pos(xpos, ypos):
 	if not _object_position_dict[xpos].get(ypos):
 		return []
 	return _object_position_dict[xpos][ypos]
+	
+func get_tile_logic_at_pos(xpos, ypos):
+	"""
+	Returns the tile logic at a given position.
+	"""
+	xpos = round(xpos)
+	ypos = round(ypos)
+	if not _tile_position_dict.get(xpos):
+		return TileEnums.TileLogic.None
+	if not _tile_position_dict[xpos].get(ypos):
+		return TileEnums.TileLogic.None
+	return _tile_position_dict[xpos][ypos].get_logic()

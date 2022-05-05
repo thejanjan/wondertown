@@ -12,8 +12,8 @@ enum GameNodeID {
 
 
 const GameNodeIDInstances = {
+	GameNodeID.TestBox: preload("res://nodes/tile_nodes/simple_block.tscn"),
 	GameNodeID.TestPlayer: preload("res://nodes/game_nodes/player.tscn"),
-	GameNodeID.TestBox: preload("res://nodes/game_nodes/simple_block.tscn"),
 }
 
 
@@ -21,4 +21,5 @@ func make_instance(id):
 	"""
 	Returns an instance of a node given a GameNodeID enum.
 	"""
-	return GameNodeIDInstances[id].instance()
+	var packed_scene = GameNodeIDInstances.get(int(id))
+	return packed_scene.instance()

@@ -21,8 +21,7 @@ func _ready():
 	
 	# Load a test tileset.
 	# TODO - refactor to an external class.
-	_level = preload("res://level/templates/Level_Headphones.tscn").instance()
-	_level_generator.add_level(_level)
+	_level_generator.add_level("res://wts//headphones.wtl")
 	
 	# Build the test tileset.
 	_level_generator.build_level()

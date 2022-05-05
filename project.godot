@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "GameNode",
 "language": "GDScript",
 "path": "res://nodes/bases/GameNode.gd"
+}, {
+"base": "Spatial",
+"class": "TileNode",
+"language": "GDScript",
+"path": "res://nodes/bases/TileNode.gd"
 } ]
 _global_script_class_icons={
-"GameNode": ""
+"GameNode": "",
+"TileNode": ""
 }
 
 [application]
@@ -27,6 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameNodeIds="*res://enums/GameNodeIds.gd"
+TileEnums="*res://enums/TileEnums.gd"
 
 [physics]
 
