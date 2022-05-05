@@ -24,18 +24,29 @@ var key_map = {
 func _ready():
 	# Initiate current pos accordingly.
 	_current_pos = self.global_transform.origin
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	self._do_translate(delta);
 	
+	# Initiate states.
+	self.add_state(
+		"Play",
+		null,
+		null,
+		funcref(self, "_do_translate"),
+		funcref(self, "_attempt_movement")
+	)
+	
+	# Enter play state.
+	self.request("Play")
 
-func _physics_process(delta):
-	self._attempt_movement();
+
+func _do_translate(delta):
+	# If we are moving, do the translation action.
+	self.translation = self.translation.move_toward(
+		self._current_pos,
+		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
+	);
 
 
-func _attempt_movement():
+func _attempt_movement(delta):
 	# Attempts to move this object a certain way.
 	if self.movement_debounce > 0:
 		# Cannot move at this time
@@ -49,11 +60,3 @@ func _attempt_movement():
 			self._current_pos += vec;
 			self.movement_debounce = self.movement_delay - 1;
 			return;
-
-
-func _do_translate(delta):
-	# If we are moving, do the translation action.
-	self.translation = self.translation.move_toward(
-		self._current_pos,
-		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
-	);
