@@ -1,4 +1,8 @@
-extends CSGBox
+extends GameNode
+
+# Node settings.
+func get_game_node_id():
+	return GameNodeIds.GameNodeID.TestPlayer
 
 # Player properties.
 var movement_delay = 12;

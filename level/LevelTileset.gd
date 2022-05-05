@@ -7,12 +7,6 @@ each tileset index into an instanced scene.
 """
 
 
-var _tile_to_scene = {
-	0: preload("res://level/level_entities/simple_block.tscn"),
-	1: preload("res://level/level_entities/player.tscn"),
-}
-
-
 func get_tile_mapping():
 	"""
 	Creates a dictionary tile mapping, containing

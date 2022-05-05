@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "GameNode",
+"language": "GDScript",
+"path": "res://nodes/bases/GameNode.gd"
+} ]
+_global_script_class_icons={
+"GameNode": ""
+}
+
 [application]
 
 config/name="wondertown"
