@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://models/game/WSWRainbowCoin.glb" type="PackedScene" id=1]
+[ext_resource path="res://models/game/coin2.bmp" type="Texture" id=2]
+[ext_resource path="res://nodes/game_nodes/WSWRainbowCoin.gd" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_unshaded = true
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "CoinSpin"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Cylinder01:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -360, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Collect"
+length = 2.0
+tracks/0/type = "transform"
+tracks/0/path = NodePath("Cylinder01")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0.5, 0, 0, 0.156434, 0, 0.987688, 0.8, 0.8, 0.8, 2, 1, 0, 2, 0, 0, 0, 0, 0.988, 0.01, 0.01, 0.01 )
+
+[node name="WSWRainbowCoin" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0262489, 0 )
+script = ExtResource( 3 )
+
+[node name="Cylinder01" parent="." index="0"]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.5, 0 )
+material/0 = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+reset_on_save = false
+anims/CoinSpin = SubResource( 2 )
+anims/Collect = SubResource( 3 )

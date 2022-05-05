@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://network/lobby/PlayerNameBox.gd" type="Script" id=1]
+
+[node name="PlayerName" type="LineEdit"]
+margin_left = 47.2125
+margin_top = 42.7272
+margin_right = 201.213
+margin_bottom = 66.7272
+placeholder_text = "Username"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="text_entered" from="." to="." method="_on_PlayerName_text_entered"]

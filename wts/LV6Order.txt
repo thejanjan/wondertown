@@ -1,0 +1,599 @@
+Documented by MyNameIsKooky
+
+-=- LV6 FILE FORMAT -=-
+
+Format name [string]: Stinky & Loof Level File v6
+Filename [string]: used by the editor to determine the default filename to save under, and might also be used by the game to save high scores
+Level version / modification ID? [4 bytes, possibly int]: seems to change every time the editor saves the file, and is also used by the game to save high scores; possibly a random number
+Level name [string]
+Custom houses flag [bool]: 0 if custom houses haven't been named, 1 if named
+Custom houses name [string]
+Custom models flag [bool]
+Custom models name [string]
+Custom texture flag [bool]
+Custom texture name [string]
+Custom background flag [bool]
+Custom background name [string]
+Time limit in seconds [int]
+Style [int]
+Background [int]
+Level width [int]
+Level height [int]
+Tile data [int[]]
+Object data [int[]]
+Sign 1 [string]
+Sign 2 [string]
+Sign 3 [string]
+Sign 4 [string]
+Sign 5 [string]
+Sign 6 [string]
+Sign 7 [string]
+Sign 8 [string]
+Sign 9 [string]
+Sign 10 [string]
+Sign 11 [string]
+Sign 12 [string]
+Sign 13 [string]
+Sign 14 [string]
+Sign 15 [string]
+Sign 16 [string]
+Sign 17 [string]
+Sign 18 [string]
+Sign 19 [string]
+Sign 20 [string]
+Music [int]
+
+-=- STYLES -=-
+
+0: Cave
+1: Sand
+2: Wood
+3: Purple
+4: Castle
+5: Jade
+6: Spooky
+7: Garden
+8: Aztec
+9: Custom
+
+-=- BACKGROUNDS -=-
+
+- 0 / 0x0: Sky
+- 1 / 0x1: Forest
+- 2 / 0x2: Walls
+- 3 / 0x3: Stars
+- 4 / 0x4: Flat
+- 5 / 0x5: Water
+- 6 / 0x6: Lava
+- 7 / 0x7: Warp
+- 8 / 0x8: City
+- 9 / 0x9: Rainbow
+- 10 / 0xA: Custom
++ 11 / 0xB: Custom again?
++ 12 / 0xC: Pitch black void.
+
+-=- MUSIC -=-
+
+Are these the canon titles?
+
+0: Silent if it's the first level you load up, otherwise Spooky; AKA pseudo-silent
+1: Rainbows (TOW Title Theme)
+2: Blocky (First Steps)
+3: Breezy (Water World)
+4: Underground (Underworld)
+5: Nostalgia (RTW Title Theme)
+6: Spooky (Creepy Keep)
+
+All nonzero music IDs outside the 1-5 range appear to be Creepy Keep.
+
+-=- TILES -=-
+
+LEGEND
+[- for tile included in editor OR + for metatile] [decimal ID] / [little-endian hexadecimal ID]: [description]
+
+- 0 / 0x0000: Empty
+- 100 / 0x6400: Floor
+- 101 / 0x6500: Floor B
+- 102 / 0x6600: Floor C
+- 103 / 0x6700: Floor D
+- 104 / 0x6800: Floor wall AKA invisible wall that looks like floor
++ 105 / 0x6900: Floor that looks like an empty tile
+- 200 / 0xC800: Wall height 1.0
+- 201 / 0xC900: Wall pit
+- 202 / 0xCA00: Wall height 1.5
+- 203 / 0xCB00: Wall height 2.0
++ 204 / 0xCC00: Wall that looks like an empty tile
+- 300 / 0x2C01: Water
++ 301 / 0x2D01: Water that looks like an empty tile
+...and so on until 400.
+- 400 / 0x9001: Ice straight
+- 401 / 0x9101: Ice curved southeast
+- 402 / 0x9201: Ice curved southwest
+- 403 / 0x9301: Ice curved northwest
+- 404 / 0x9401: Ice curved northeast
++ 405 / 0x9501: Ice that looks like an empty tile which kills you if you step onto it; objects pushed onto it will be stuck there
+- 500 / 0xF401: Gray conveyor 1 north
+- 501 / 0xF501: Gray conveyor 1 east
+- 502 / 0xF601: Gray conveyor 1 south
+- 503 / 0xF701: Gray conveyor 1 west
+- 504 / 0xF801: Switch conveyor 1 north
+- 505 / 0xF901: Switch conveyor 1 east
+- 506 / 0xFA01: Switch conveyor 1 south
+- 507 / 0xFB01: Switch conveyor 1 west
+- 508 / 0xFC01: Gray conveyor 2 north
+- 509 / 0xFD01: Gray conveyor 2 east
+- 510 / 0xFE01: Gray conveyor 2 south
+- 511 / 0xFF01: Gray conveyor 2 west
+- 512 / 0x0002: Switch conveyor 2 north
+- 513 / 0x0102: Switch conveyor 2 east
+- 514 / 0x0202: Switch conveyor 2 south
+- 515 / 0x0302: Switch conveyor 2 west
++ 516 / 0x0402: Invisible gray conveyor 2 north
++ 517 / 0x0502: Invisible gray conveyor 2 east
++ 518 / 0x0602: Invisible gray conveyor 2 south
++ 519 / 0x0702: Invisible gray conveyor 2 west
++ 520 / 0x0802: Invisible switch conveyor 2 north (becomes visible after stepped on once)
++ 521 / 0x0902: Invisible switch conveyor 2 east
++ 522 / 0x0A02: Invisible switch conveyor 2 south
++ 523 / 0x0B02: Invisible switch conveyor 2 west
+- 600 / 0x5802: Water break tile 1
+- 601 / 0x5902: Water break tile 2
+- 602 / 0x5A02: Water break tile 3
+- 603 / 0x5B02: Lava break tile 1
+- 604 / 0x5C02: Lava break tile 2
+- 605 / 0x5D02: Lava break tile 3
+- 606 / 0x5E02: Empty break tile 1
+- 607 / 0x5F02: Empty break tile 2
+- 608 / 0x6002: Empty break tile 3
++ 609 / 0x6102: Empty break tile 4 (the appearance of the break tile loops every 3 breaks)
++ 610 / 0x6202: Empty break tile 5
+...
++ 698 / 0xBA02: Empty break tile 93
++ 699 / 0xBB02: Empty break tile 94
+- 700 / 0xBC02: Electro tile 1
+- 701 / 0xBD02: Electro tile 2
+- 702 / 0xBE02: Electro tile 3
+- 703 / 0xBF02: Electro tile 4
+- 800 / 0x2003: Purple Scouge north speed 1
+- 801 / 0x2103: Purple Scouge north speed 2
+- 802 / 0x2203: Purple Scouge north speed 3
+- 803 / 0x2303: Purple Scouge north speed 4
+- 804 / 0x2403: Purple Scouge east speed 1
+- 805 / 0x2503: Purple Scouge east speed 2
+- 806 / 0x2603: Purple Scouge east speed 3
+- 807 / 0x2703: Purple Scouge east speed 4
+- 808 / 0x2803: Purple Scouge south speed 1
+- 809 / 0x2903: Purple Scouge south speed 2
+- 810 / 0x2A03: Purple Scouge south speed 3
+- 811 / 0x2B03: Purple Scouge south speed 4
+- 812 / 0x2C03: Purple Scouge west speed 1
+- 813 / 0x2D03: Purple Scouge west speed 2
+- 814 / 0x2E03: Purple Scouge west speed 3
+- 815 / 0x2F03: Purple Scouge west speed 4
++ 816 / 0x3003: Invisible wall? Probably has Purple Scouge-like properties, if that's relevant?
+- 900 / 0x8403: Lava
++ 901 / 0x8503: Lava that looks like an empty tile
+- 1000 / 0xE803: Horizontal tollgate
+- 1001 / 0xE903: Vertical tollgate
+- 1002 / 0xEA03: Horizontal purple gate
+- 1003 / 0xEB03: Vertical purple gate
+- 1004 / 0xEC03: Horizontal yellow gate
+- 1005 / 0xED03: Vertical yellow gate
+- 1006 / 0xEE03: Horizontal green gate
+- 1007 / 0xEF03: Vertical green gate
+- 1008 / 0xF003: Horizontal blue gate
+- 1009 / 0xF103: Vertical blue gate
+- 1010 / 0xF203: Horizontal red gate
+- 1011 / 0xF303: Vertical red gate
+- 1012 / 0xF403: Horizontal indigo gate
+- 1013 / 0xF503: Vertical indigo gate
+- 1014 / 0xF603: Horizontal white gate
+- 1015 / 0xF703: Vertical white gate
++ 1016 / 0xF803: Horizontal M0 gate (a white gate not affected by normal white buttons, but will be affected by buttons of the same color, where the color here is designated by M0)
++ 1017 / 0xF903: Vertical M0 gate
++ 1018 / 0xFA03: Horizontal M1 gate
++ 1019 / 0xFB03: Vertical M1 gate
++ 1020 / 0xFC03: Horizontal M2 gate
++ 1021 / 0xFD03: Vertical M2 gate
++ 1022 / 0xFE03: Horizontal M3 gate
++ 1023 / 0xFF03: Vertical M3 gate
++ 1024 / 0x0004: Horizontal M4 gate
++ 1025 / 0x0104: Vertical M4 gate
++ 1026 / 0x0204: Horizontal M5 gate
++ 1027 / 0x0304: Vertical M5 gate
++ 1028 / 0x0404: Horizontal M6 gate
++ 1029 / 0x0504: Vertical M6 gate
++ 1030 / 0x0604: Horizontal M7 gate
++ 1031 / 0x0704: Vertical M7 gate
++ 1032 / 0x0804: Horizontal M8 gate
++ 1033 / 0x0904: Vertical M8 gate
++ 1034 / 0x0A04: Horizontal M9 gate
++ 1035 / 0x0B04: Vertical M9 gate
++ 1036 / 0x0C04: Horizontal M10 gate
++ 1037 / 0x0D04: Vertical M10 gate
++ 1038 / 0x0E04: Horizontal M11 gate
++ 1039 / 0x0F04: Vertical M11 gate
++ 1040 / 0x1004: Horizontal M12 gate
++ 1041 / 0x1104: Vertical M12 gate
++ 1042 / 0x1204: Horizontal M13 gate
++ 1043 / 0x1304: Vertical M13 gate
++ 1044 / 0x1404: Horizontal M14 gate
++ 1045 / 0x1504: Vertical M14 gate
++ 1046 / 0x1604: Horizontal M15 gate
++ 1047 / 0x1704: Vertical M15 gate
++ 1048 / 0x1804: Horizontal M16 gate
++ 1049 / 0x1904: Vertical M16 gate
++ 1050 / 0x1A04: Horizontal M17 gate (all gates of color M17 and higher are not solid, and are also not visually affected by their corresponding metabuttons)
++ 1051 / 0x1B04: Vertical M17 gate
++ 1052 / 0x1C04: Horizontal M18 gate
++ 1053 / 0x1D04: Vertical M18 gate
++ 1054 / 0x1E04: Horizontal M19 gate
++ 1055 / 0x1F04: Vertical M19 gate
++ 1056 / 0x2004: Horizontal M20 gate
++ 1057 / 0x2104: Vertical M20 gate
++ 1058 / 0x2204: Horizontal M21 gate
++ 1059 / 0x2304: Vertical M21 gate
++ 1060 / 0x2404: Horizontal M22 gate
++ 1061 / 0x2504: Vertical M22 gate
++ 1062 / 0x2604: Horizontal M23 gate
++ 1063 / 0x2704: Vertical M23 gate
++ 1064 / 0x2804: Horizontal M24 gate
++ 1065 / 0x2904: Vertical M24 gate
++ 1066 / 0x2A04: Horizontal M25 gate
++ 1067 / 0x2B04: Vertical M25 gate
+...and so on, until 1099.
+- 1100 / 0x4C04: Conveyor 1 square button
+- 1101 / 0x4D04: Conveyor 1 circle button
+- 1102 / 0x4E04: Conveyor 1 star button
+- 1103 / 0x4F04: Conveyor 2 square button
+- 1104 / 0x5004: Conveyor 2 circle button
+- 1105 / 0x5104: Conveyor 2 star button
+- 1106 / 0x5204: Purple square button
+- 1107 / 0x5304: Purple circle button
+- 1108 / 0x5404: Purple star button
+- 1109 / 0x5504: Yellow square button
+- 1110 / 0x5604: Yellow circle button
+- 1111 / 0x5704: Yellow star button
+- 1112 / 0x5804: Green square button
+- 1113 / 0x5904: Green circle button
+- 1114 / 0x5A04: Green star button
+- 1115 / 0x5B04: Blue square button
+- 1116 / 0x5C04: Blue circle button
+- 1117 / 0x5D04: Blue star button
+- 1118 / 0x5E04: Red square button
+- 1119 / 0x5F04: Red circle button
+- 1120 / 0x6004: Red star button
+- 1121 / 0x6104: Indigo square button
+- 1122 / 0x6204: Indigo circle button
+- 1123 / 0x6304: Indigo star button
+- 1124 / 0x6404: White square button
+- 1125 / 0x6504: White circle button
+- 1126 / 0x6604: White star button
++ 1127 / 0x6704: M0 square button; invisible (metabuttons like this will use the wrong graphics index, but still work on gates of the same metacolor; the appearance of the button will be described after the semicolon)
++ 1128 / 0x6804: M0 circle button; invisible
++ 1129 / 0x6904: M0 star button; invisible
++ 1130 / 0x6A04: M1 square button; invisible
++ 1131 / 0x6B04: M1 circle button; invisible
++ 1132 / 0x6C04: M1 star button; conveyor square
++ 1133 / 0x6D04: M2 square button; conveyor circle
++ 1134 / 0x6E04: M2 circle button; conveyor star
++ 1135 / 0x6F04: M2 star button; conveyor square
++ 1136 / 0x7004: M3 square button; conveyor circle
++ 1137 / 0x7104: M3 circle button; conveyor star
++ 1138 / 0x7204: M3 star button; purple square
++ 1139 / 0x7304: M4 square button; purple circle
++ 1140 / 0x7404: M4 circle button; purple star
++ 1141 / 0x7504: M4 star button; yellow square
++ 1142 / 0x7604: M5 square button; yellow circle
++ 1143 / 0x7704: M5 circle button; yellow star
++ 1144 / 0x7804: M5 star button; green square
++ 1145 / 0x7904: M6 square button; green circle
++ 1146 / 0x7A04: M6 circle button; green star
++ 1147 / 0x7B04: M6 star button; blue square
++ 1148 / 0x7C04: M7 square button; blue circle
++ 1149 / 0x7D04: M7 circle button; blue star
++ 1150 / 0x7E04: M7 star button; red square
++ 1151 / 0x7F04: M8 square button; red circle
++ 1152 / 0x8004: M8 circle button; red star
++ 1153 / 0x8104: M8 star button; indigo square
++ 1154 / 0x8204: M9 square button; indigo circle
++ 1155 / 0x8304: M9 circle button; indigo star
++ 1156 / 0x8404: M9 star button; white square
++ 1157 / 0x8504: M10 square button; white circle
++ 1158 / 0x8604: M10 circle button; white star
++ 1159 / 0x8704: M10 star button; invisible
++ 1160 / 0x8804: M11 square button; invisible
++ 1161 / 0x8904: M11 circle button; invisible
++ 1162 / 0x8A04: M11 star button; invisible
++ 1163 / 0x8B04: M12 square button; invisible
++ 1164 / 0x8C04: M12 circle button; conveyor square
++ 1165 / 0x8D04: M12 star button; conveyor circle
++ 1166 / 0x8E04: M13 square button; conveyor star
++ 1167 / 0x8F04: M13 circle button; conveyor square
++ 1168 / 0x9004: M13 star button; conveyor circle
++ 1169 / 0x9104: M14 square button; conveyor star
++ 1170 / 0x9204: M14 circle button; purple square
++ 1171 / 0x9304: M14 star button; purple circle
++ 1172 / 0x9404: M15 square button; purple star
++ 1173 / 0x9504: M15 circle button; yellow square
++ 1174 / 0x9604: M15 star button; yellow circle
++ 1175 / 0x9704: M16 square button; yellow star
++ 1176 / 0x9804: M16 circle button; green square
++ 1177 / 0x9904: M16 star button; green circle
++ 1178 / 0x9A04: M17 square button; green star
++ 1179 / 0x9B04: M17 circle button; blue square
++ 1180 / 0x9C04: M17 star button; blue circle
++ 1181 / 0x9D04: M18 square button; blue star
++ 1182 / 0x9E04: M18 circle button; red square
++ 1183 / 0x9F04: M18 star button; red circle
++ 1184 / 0xA004: M19 square button; red star
++ 1185 / 0xA104: M19 circle button; indigo square
++ 1186 / 0xA204: M19 star button; indigo circle
++ 1187 / 0xA304: M20 square button; indigo star
++ 1188 / 0xA404: M20 circle button; white square
++ 1189 / 0xA504: M20 star button; white circle
++ 1190 / 0xA604: M21 square button; white star
++ 1191 / 0xA704: M21 circle button; invisible
++ 1192 / 0xA804: M21 star button; invisible
++ 1193 / 0xA904: M22 square button; invisible
++ 1194 / 0xAA04: M22 circle button; invisible
++ 1195 / 0xAB04: M22 star button; invisible
++ 1196 / 0xAC04: M23 square button; conveyor square
++ 1197 / 0xAD04: M23 circle button; conveyor circle
++ 1198 / 0xAE04: M23 star button; conveyor star
++ 1199 / 0xAF04: M24 square button; conveyor square
+- 1200 / 0xB004: Red Teleporter
+- 1201 / 0xB104: Yellow Teleporter
+- 1202 / 0xB204: Green Teleporter
+- 1203 / 0xB304: Indigo Teleporter
+- 1204 / 0xB404: Purple Teleporter
+- 1205 / 0xB504: Blue Teleporter
+- 1206 / 0xB604: White Teleporter
+- 1207 / 0xB704: Black Teleporter
++ 1208 / 0xB804: M0 Teleporter (looks like an empty tile)
++ 1209 / 0xB904: M1 Teleporter
++ 1210 / 0xBA04: M2 Teleporter
++ 1211 / 0xBB04: M3 Teleporter
++ 1212 / 0xBC04: M4 Teleporter
+...
++ 1299 / 0x1305: M91 Teleporter
+- 1300 / 0x1405: Sign 1
+- 1301 / 0x1505: Sign 2
+- 1302 / 0x1605: Sign 3
+- 1303 / 0x1705: Sign 4
+- 1304 / 0x1805: Sign 5
+- 1305 / 0x1905: Sign 6
+- 1306 / 0x1A05: Sign 7
+- 1307 / 0x1B05: Sign 8
+- 1308 / 0x1C05: Sign 9
+- 1309 / 0x1D05: Sign 10
+- 1310 / 0x1E05: Sign 11
+- 1311 / 0x1F05: Sign 12
+- 1312 / 0x2005: Sign 13
+- 1313 / 0x2105: Sign 14
+- 1314 / 0x2205: Sign 15
+- 1315 / 0x2305: Sign 16
+- 1316 / 0x2405: Sign 17
+- 1317 / 0x2505: Sign 18
+- 1318 / 0x2605: Sign 19
+- 1319 / 0x2705: Sign 20
++ 1320 / 0x2805: Sign 21 AKA Fake Sign (has the appearance of a sign tile but does nothing when you step on it)
+- 1400 / 0x7805: Spikes speed 1
+- 1401 / 0x7905: Spikes speed 2
+- 1402 / 0x7A05: Spikes speed 3
+- 1403 / 0x7B05: Spikes speed 4
++ 1404 / 0x7C05: Spikes speed 5
+...
++ 1499 / 0xDB05: Spikes speed 100
+- 1500 / 0xDC05: Fake wall height 1.0
+- 1501 / 0xDD05: Fake wall height 1.5
+- 1502 / 0xDE05: Fake wall height 2.0
++ 1503 / 0xDF05: Floor that looks like an empty tile (same behavior as 0x69)
+- 1600 / 0x4006: Wooden Box Factory
+- 1601 / 0x4106: Steel Box Factory
+- 1602 / 0x4206: Northwest Reflector Factory
+- 1603 / 0x4306: Northeast Reflector Factory
+- 1604 / 0x4406: Boulder Factory
+- 1605 / 0x4506: Plasma Box Factory
+- 1606 / 0x4606: Powder Keg Factory
+- 1607 / 0x4706: Prism Factory
+- 1608 / 0x4806: Sticky Cube Factory
+- 1609 / 0x4906: Red Link Sphere Factory
+- 1610 / 0x4A06: Yellow Link Sphere Factory
+- 1611 / 0x4B06: Green Link Sphere Factory
+- 1612 / 0x4C06: Blue Link Sphere Factory
++ 1613 / 0x4D06: Glitchy Box Factory that spawns fireproof invisible boxes and MAVs a lot (the boxes spawned are perhaps similar to 38 08?)
+- 1700 / 0xA406: Water Transporter
+- 1701 / 0xA506: Empty Transporter
+- 1702 / 0xA606: Lava Transporter
++ 1703 / 0xA706: Glitched Transporter: Anything that gets pushed onto it gets transported to the level border, moving across floors. It leaves walls behind in its trail. Objects can be pushed across these walls.
++ 1790 / 0xFE06: Glitched Transporter that spawns trampolines on its trail on tiles where a box is pushed over it 3 times.
++ 1791 / 0xFF06: Glitched Transporter that spawns trampolines on its trail on tiles where a box is pushed over it 2 times.
++ 1792 / 0x0007: Same as 1791.
++ 1799 / 0x0707: Glitched Transporter that spawns trampolines on its trail.
+- 1800 / 0x0807: Trampoline
++ 1801 / 0x0907: Trampoline that looks like an empty tile
+- 1900 / 0x6C07: Green Scouge north speed 1
+- 1901 / 0x6D07: Green Scouge north speed 2
+- 1902 / 0x6E07: Green Scouge north speed 3
+- 1903 / 0x6F07: Green Scouge north speed 4
+- 1904 / 0x7007: Green Scouge east speed 1
+- 1905 / 0x7107: Green Scouge east speed 2
+- 1906 / 0x7207: Green Scouge east speed 3
+- 1907 / 0x7307: Green Scouge east speed 4
+- 1908 / 0x7407: Green Scouge south speed 1
+- 1909 / 0x7507: Green Scouge south speed 2
+- 1910 / 0x7607: Green Scouge south speed 3
+- 1911 / 0x7707: Green Scouge south speed 4
+- 1912 / 0x7807: Green Scouge west speed 1
+- 1913 / 0x7907: Green Scouge west speed 2
+- 1914 / 0x7A07: Green Scouge west speed 3
+- 1915 / 0x7B07: Green Scouge west speed 4
++ 1916 / 0x7C07: Green Scouge north that destroys its own fireballs immediately, making it harmless
+...seems to continue until the end of this 100-block.
+- 2000 / 0xD007: Sticky Cube
+...seems to continue until the end of this 100-block.
+- 2100 / 0x3408: Red Link Sphere
+- 2101 / 0x3508: Yellow Link Sphere
+- 2102 / 0x3608: Green Link Sphere
+- 2103 / 0x3708: Blue Link Sphere
++ 2104 / 0x3808: 38 08: Very buggy and MAVs a lot. Possibly a default-initialized box entity? You often need to load a different level before loading a level that contains 38 08. If the 38 08 is destroyed, a MAV might occur.
+- 2200 / 0x9808: Coily Warp Gate
+- 2201 / 0x9908: Left-turning Z-Bot Warp Gate
+- 2202 / 0x9A08: Right-turning Z-Bot Warp Gate
+- 2203 / 0x9B08: Left-turning Kaboom! Warp Gate
+- 2204 / 0x9C08: Right-turning Kaboom! Warp Gate
+- 2205 / 0x9D08: Left-turning UFO Warp Gate
+- 2206 / 0x9E08: Right-turning UFO Warp Gate
+- 2207 / 0x9F08: Red Chomper Warp Gate
+- 2208 / 0xA008: Yellow Chomper Warp Gate
+- 2209 / 0xA108: Ghost Warp Gate
+- 2210 / 0xA208: Rainbow Spirit Warp Gate
+- 2211 / 0xA308: Broken Z-Bot Warp Gate
++ 2212 / 0xA408: Blue Shadow Stinky Warp Gate (Shadow Stinkers from Warp Gates seem to not animate properly)
++ 2213 / 0xA508: Blue Shadow Loof Warp Gate
++ 2214 / 0xA608: Blue Shadow Loof Warp Gate again?
++ 2215 / 0xA708: Blue Shadow Qookie Warp Gate
++ 2216 / 0xA808: Blue Shadow Peegue Warp Gate
++ 2217 / 0xA908: Red Shadow Stinky Warp Gate
++ 2218 / 0xAA08: Red Shadow Loof Warp Gate
++ 2219 / 0xAB08: Red Shadow Qookie Warp Gate
++ 2220 / 0xAC08: Red Shadow Peegue Warp Gate
+- 2300 / 0xFC08: 3D Mode
+- 2400 / 0x6009: Blue Shadow Stinky
+- 2401 / 0x6109: Blue Shadow Loof
+- 2402 / 0x6209: Blue Shadow Qookie
+- 2403 / 0x6309: Blue Shadow Peegue
+- 2404 / 0x6409: Red Shadow Stinky
+- 2405 / 0x6509: Red Shadow Loof
+- 2406 / 0x6609: Red Shadow Qookie
+- 2407 / 0x6709: Red Shadow Peegue
+
+-=- OBJECTS -=-
+
+0 / 0x00: Nothing
+1 / 0x01: Stinky
+2 / 0x02: Loof
+3 / 0x03: Qookie
+4 / 0x04: Peegue
+5 / 0x05: Rainbow Coin
+6 / 0x06: Exit
+7 / 0x07: Clock
+8 / 0x08: Bonus Coin
+9 / 0x09: Wooden Box
+10 / 0x0A: Steel Box
+11 / 0x0B: Northwest Reflector
+12 / 0x0C: Northeast Reflector
+13 / 0x0D: Boulder
+14 / 0x0E: Plasma Box
+15 / 0x0F: Powder Keg
+16 / 0x10: Prism
+17 / 0x11: Coily
+18 / 0x12: Left-turning Z-Bot moving north
+19 / 0x13: Right-turning Z-Bot moving north
+20 / 0x14: Left-turning Z-Bot moving east
+21 / 0x15: Right-turning Z-Bot moving east
+22 / 0x16: Left-turning Z-Bot moving south
+23 / 0x17: Right-turning Z-Bot moving south
+24 / 0x18: Left-turning Z-Bot moving west
+25 / 0x19: Right-turning Z-Bot moving west
+26 / 0x1A: Broken Z-Bot
+27 / 0x1B: Left-turning Kaboom! moving north
+28 / 0x1C: Right-turning Kaboom! moving north
+29 / 0x1D: Left-turning Kaboom! moving east
+30 / 0x1E: Right-turning Kaboom! moving east
+31 / 0x1F: Left-turning Kaboom! moving south
+32 / 0x20: Right-turning Kaboom! moving south
+33 / 0x21: Left-turning Kaboom! moving west
+34 / 0x22: Right-turning Kaboom! moving west
+35 / 0x23: Left-turning UFO moving north
+36 / 0x24: Right-turning UFO moving north
+37 / 0x25: Left-turning UFO moving east
+38 / 0x26: Right-turning UFO moving east
+39 / 0x27: Left-turning UFO moving south
+40 / 0x28: Right-turning UFO moving south
+41 / 0x29: Left-turning UFO moving west
+42 / 0x2A: Right-turning UFO moving west
+43 / 0x2B: Red Chomper
+44 / 0x2C: Yellow Chomper
+45 / 0x2D: Ghost
+46 / 0x2E: Rainbow Spirit
+47 / 0x2F: Mothership
+48 / 0x30: Fish
+49 / 0x31: Fireball
+50 / 0x32: Pillar
+51 / 0x33: Fat spike
+52 / 0x34: Skinny spike
+53 / 0x35: Fountain
+54 / 0x36: Big pyramid
+55 / 0x37: Small pyramid
+56 / 0x38: Big box
+57 / 0x39: Lamp post
+58 / 0x3A: South-facing house
+59 / 0x3B: West-facing house
+60 / 0x3C: North-facing house
+61 / 0x3D: East-facing house
+62 / 0x3E: Custom house texture 1
+63 / 0x3F: Custom house texture 2
+64 / 0x40: Custom house texture 3
+65 / 0x41: Custom house texture 4
+66 / 0x42: Fat tree
+67 / 0x43: Thin tree
+68 / 0x44: Normal evergreen
+69 / 0x45: Snowy evergreen
+70 / 0x46: Small mushroom
+71 / 0x47: Big mushroom
+72 / 0x48: Flowers
+73 / 0x49: Stone statue
+74 / 0x4A: Rainbow statue
+75 / 0x4B: Snowman
+76 / 0x4C: Custom model A
+77 / 0x4D: Custom model B
+78 / 0x4E: Custom model C
+79 / 0x4F: Custom model D
+80 / 0x50: Red lighting
+81 / 0x51: Green lighting
+82 / 0x52: Blue lighting
+83 / 0x53: Yellow lighting
+84 / 0x54: Snowing
+85 / 0x55: Raining
+86 / 0x56: Lightning
+87 / 0x57: Rainbow lighting
+88 / 0x58: Rainbow leveltexture (requires Rainbow background to work)
+89 / 0x59: Alien statue
+
+-=- LEV OBJECTS (TOW) -=-
+
+            0 => Self::NONE,
+            1 => Self::STINKY,
+            2 => Self::LOOF,
+            3 => Self::BOX_WOOD,
+            4 => Self::BOX_STEEL,
+            5 => Self::EXIT,
+            6 => Self::COIN_RAINBOW,
+            7 => Self::COILY,
+            8 => Self::ZBOT_NORTH_LEFT,
+            9 => Self::ZBOT_NORTH_RIGHT,
+            10 => Self::ZBOT_EAST_LEFT,
+            11 => Self::ZBOT_EAST_RIGHT,
+            12 => Self::ZBOT_SOUTH_LEFT,
+            13 => Self::ZBOT_SOUTH_RIGHT,
+            14 => Self::ZBOT_WEST_LEFT,
+            15 => Self::ZBOT_WEST_RIGHT,
+            16 => Self::KABOOM_NORTH_LEFT,
+            17 => Self::KABOOM_NORTH_RIGHT,
+            18 => Self::KABOOM_EAST_LEFT,
+            19 => Self::KABOOM_EAST_RIGHT,
+            20 => Self::KABOOM_SOUTH_LEFT,
+            21 => Self::KABOOM_SOUTH_RIGHT,
+            22 => Self::KABOOM_WEST_LEFT,
+            23 => Self::KABOOM_WEST_RIGHT,
+            // 24 is a white ball that disappears without any fanfare if you touch it.
+            // It was the bonus coin used in the TOW prototype.
+            // Unlike in the prototype, it doesn't add 250 points to your score in the final TOW build.
+            25 => Self::COIN_BONUS,
+            26 => Self::FISH,
+            27 => Self::WEATHER_SNOW,
+            28 => Self::PILLAR,
+            29 => Self::SPIKE_FAT,
+            30 => Self::SPIKE_THIN,
