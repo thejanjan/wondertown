@@ -55,7 +55,7 @@ func _attempt_movement(delta):
 		if Input.is_key_pressed(key):
 			var xpos = vec[0]
 			var ypos = vec[1]
-			if self.check_walkability(xpos, ypos):
+			if self.check_tile_logic(xpos, ypos) == TileEnums.TileLogic.Floor:
 				self.move_pos(xpos, ypos)
 				self.movement_debounce = self.movement_delay - 1;
 				return;

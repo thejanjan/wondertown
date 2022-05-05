@@ -155,15 +155,12 @@ func _physics_process(delta):
 Collision helper methods
 """
 
-func check_walkability(xpos, ypos, relative=true):
+func check_tile_logic(xpos, ypos, relative=true):
 	"""
-	Checks if it is safe to walk at a given xpos, ypos.
-	Todo: Replace this with a tilenode access for tile logic.
+	Checks the tile logic at a given position.
 	"""
 	if not relative:
-		var objects_at_pos = _level_dictionary.get_objects_at_pos(xpos, ypos)
-		return len(objects_at_pos) > 0
+		return _level_dictionary.get_tile_logic_at_pos(xpos, ypos)
 	else:
-		var objects_at_pos = _level_dictionary.get_objects_at_pos(self.xpos + xpos, self.ypos + ypos)
-		return len(objects_at_pos) > 0
+		return _level_dictionary.get_tile_logic_at_pos(self.xpos + xpos, self.ypos + ypos)
 		
