@@ -10,21 +10,17 @@ var movement_delay = 12;
 
 # Declare member variables here. Examples:
 var movement_debounce = 0;
-var _current_pos = null;
 
 var key_map = {
-	KEY_LEFT: Vector3.LEFT,
-	KEY_RIGHT: Vector3.RIGHT,
-	KEY_UP: Vector3.FORWARD,
-	KEY_DOWN: Vector3.BACK,
+	KEY_LEFT: [-1, 0],
+	KEY_RIGHT: [1, 0],
+	KEY_UP: [0, -1],
+	KEY_DOWN: [0, 1],
 };
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Initiate current pos accordingly.
-	_current_pos = self.global_transform.origin
-	
 	# Initiate states.
 	self.add_state(
 		"Play",
@@ -41,7 +37,7 @@ func _ready():
 func _do_translate(delta):
 	# If we are moving, do the translation action.
 	self.translation = self.translation.move_toward(
-		self._current_pos,
+		self.get_pos_as_vector() + Vector3(0, 1, 0),
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
 
@@ -57,6 +53,8 @@ func _attempt_movement(delta):
 	for key in self.key_map:
 		var vec = self.key_map[key];
 		if Input.is_key_pressed(key):
-			self._current_pos += vec;
+			var xpos = vec[0]
+			var ypos = vec[1]
+			self.move_pos(xpos, ypos)
 			self.movement_debounce = self.movement_delay - 1;
 			return;

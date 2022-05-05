@@ -33,7 +33,17 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
-	
+
+
+func _cleanup():
+	"""
+	Called whenever the game node enters the Off state.
+	"""
+	pass
+
+"""
+Position methods
+"""
 
 func set_gamenode_pos(xpos, ypos, translate=false):
 	"""
@@ -45,11 +55,12 @@ func set_gamenode_pos(xpos, ypos, translate=false):
 		self.translate(Vector3(xpos, 0, ypos))
 
 
-func _cleanup():
-	"""
-	Called whenever the game node enters the Off state.
-	"""
-	pass
+func move_pos(xpos_diff, ypos_diff, translate=false):
+	set_gamenode_pos(self.xpos + xpos_diff, self.ypos + ypos_diff, translate)
+	
+
+func get_pos_as_vector():
+	return Vector3(xpos, 0, ypos)
 
 """
 FSM pattern
