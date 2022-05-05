@@ -43,16 +43,16 @@ FSM pattern
 var _current_state = "Off"
 var _transition_state = null
 var state_list = {
-	"Off": [funcref(self, "_cleanup"), null]
+	"Off": [funcref(self, "_cleanup"), null, null, null]
 }
 
-func add_state(state_name, enter_func=null, exit_func=null):
+func add_state(state_name, enter_func=null, exit_func=null, process_func=null, physics_process_func=null):
 	"""
 	Adds a state to the game node FSM.
 	"""
 	assert(not state_list.has(state_name))
 	
-	state_list[state_name] = [enter_func, exit_func]
+	state_list[state_name] = [enter_func, exit_func, process_func, physics_process_func]
 
 
 func request(state_name, exit_args=[], enter_args=[]):
@@ -88,3 +88,34 @@ func get_state():
 	Returns null if in transition.
 	"""
 	return _current_state
+
+"""
+Process methods
+"""
+
+func _process(delta):
+	"""
+	Process is handled state-by-state.
+	"""
+	var state = get_state()
+	
+	# Figure out what our callback should be.
+	var process_func = state_list[state][2]
+	
+	# Run our process func.
+	if (process_func != null):
+		process_func.call_func(delta)
+
+
+func _physics_process(delta):
+	"""
+	Process is handled state-by-state.
+	"""
+	var state = get_state()
+	
+	# Figure out what our callback should be.
+	var physics_process_func = state_list[state][3]
+	
+	# Run our process func.
+	if (physics_process_func != null):
+		physics_process_func.call_func(delta)
