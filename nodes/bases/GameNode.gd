@@ -17,6 +17,10 @@ func get_game_node_id():
 # has a built-in dict from object id to object.
 var id = null
 
+# Object properties.
+export var xpos = 0
+export var ypos = 0
+
 # References to level singletons.
 var _level_manager = null
 var _level_dictionary = null
@@ -29,6 +33,17 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
+	
+
+func set_gamenode_pos(xpos, ypos, translate=false):
+	"""
+	Sets the gamenode's position.
+	"""
+	self.xpos = xpos
+	self.ypos = ypos
+	if translate:
+		self.translate(Vector3(xpos, 0, ypos))
+
 
 func _cleanup():
 	"""

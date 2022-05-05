@@ -58,7 +58,7 @@ func build_level():
 		
 		for vec2d in vec2d_list:
 			var object := self.tileset_node.get_instance(tile_id) as GameNode
-			object.translate(Vector3(vec2d.x, 0, vec2d.y))
+			object.set_gamenode_pos(vec2d.x, vec2d.y, true)
 			self.add_child(object)
 			
 			# TODO - set object's node id here.
