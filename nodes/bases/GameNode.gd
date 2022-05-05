@@ -29,3 +29,62 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
+
+func _cleanup():
+	"""
+	Called whenever the game node enters the Off state.
+	"""
+	pass
+
+"""
+FSM pattern
+"""
+
+var _current_state = "Off"
+var _transition_state = null
+var state_list = {
+	"Off": [funcref(self, "_cleanup"), null]
+}
+
+func add_state(state_name, enter_func=null, exit_func=null):
+	"""
+	Adds a state to the game node FSM.
+	"""
+	assert(not state_list.has(state_name))
+	
+	state_list[state_name] = [enter_func, exit_func]
+
+
+func request(state_name, exit_args=[], enter_args=[]):
+	"""
+	Requests a state to enter.
+	"""
+	# Are we already in a state transition?
+	if (_transition_state != null):
+		push_error("GameNode attempted to request state mid-transition.")
+	
+	# Set our state variables pre-transition.
+	_transition_state = _current_state
+	_current_state = null
+	
+	# Call our exit function.
+	var exit_func = state_list[_transition_state][1]
+	if (exit_func != null):
+		exit_func.call_funcv(exit_args)
+	
+	# Call our entrance function.
+	var enter_func = state_list[state_name][1]
+	if (enter_func != null):
+		enter_func.call_funcv(enter_args)
+	
+	# Reset our transition state.
+	_transition_state = null
+	_current_state = state_name
+
+
+func get_state():
+	"""
+	Returns the current state of the GameNode.
+	Returns null if in transition.
+	"""
+	return _current_state
