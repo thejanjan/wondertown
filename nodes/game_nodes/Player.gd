@@ -55,6 +55,7 @@ func _attempt_movement(delta):
 		if Input.is_key_pressed(key):
 			var xpos = vec[0]
 			var ypos = vec[1]
-			self.move_pos(xpos, ypos)
-			self.movement_debounce = self.movement_delay - 1;
-			return;
+			if self.check_walkability(xpos, ypos):
+				self.move_pos(xpos, ypos)
+				self.movement_debounce = self.movement_delay - 1;
+				return;

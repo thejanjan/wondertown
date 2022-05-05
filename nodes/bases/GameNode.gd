@@ -150,3 +150,20 @@ func _physics_process(delta):
 	# Run our process func.
 	if (physics_process_func != null):
 		physics_process_func.call_func(delta)
+
+"""
+Collision helper methods
+"""
+
+func check_walkability(xpos, ypos, relative=true):
+	"""
+	Checks if it is safe to walk at a given xpos, ypos.
+	Todo: Replace this with a tilenode access for tile logic.
+	"""
+	if not relative:
+		var objects_at_pos = _level_dictionary.get_objects_at_pos(xpos, ypos)
+		return len(objects_at_pos) > 0
+	else:
+		var objects_at_pos = _level_dictionary.get_objects_at_pos(self.xpos + xpos, self.ypos + ypos)
+		return len(objects_at_pos) > 0
+		
