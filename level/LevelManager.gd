@@ -26,8 +26,6 @@ func _ready():
 	
 	# Build the test tileset.
 	_level_generator.build_level()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	
+	# Get the level dictionary.
+	_level_dictionary = _level_generator.get_level_dictionary()

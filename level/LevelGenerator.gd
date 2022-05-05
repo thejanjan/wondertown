@@ -11,6 +11,12 @@ in order create an entire level instance.
 const LevelTileset = preload("res://level/LevelTileset.gd")
 var level_node = null
 var tileset_node = null
+var _level_dictionary = null
+
+
+func _ready():
+	_level_dictionary = preload("res://level/LevelDictionary.tscn").instance()
+	add_child(_level_dictionary)
 
 
 func add_level(level):
@@ -51,6 +57,18 @@ func build_level():
 			var object = self.tileset_node.get_instance(tile_id)
 			object.translate(Vector3(vec2d.x, 0, vec2d.y))
 			self.add_child(object)
+			
+			# TODO - set object's node id here.
+			
+			# Tell the dictionary about this object.
+			_level_dictionary.add_game_node(object, tile_id)
 	
 	# Ok, now hide the level map.
 	self.tileset_node.visible = false
+
+
+func get_level_dictionary():
+	"""
+	Returns our level dictionary.
+	"""
+	return _level_dictionary
