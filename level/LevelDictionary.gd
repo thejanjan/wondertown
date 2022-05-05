@@ -25,9 +25,9 @@ func _ready():
 		_object_id_dict[id] = []
 
 
-func add_game_node(node, id):
+func add_game_node(node):
 	"""
 	Adds a game node to the LevelDictionary.
 	"""
 	# TODO - refactor function call to take the GameNodeID from the game node.
-	_object_id_dict[id].append(node)
+	_object_id_dict[node.get_game_node_id()].append(node)

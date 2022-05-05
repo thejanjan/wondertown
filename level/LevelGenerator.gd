@@ -66,7 +66,7 @@ func build_level():
 			_current_id += 1
 			
 			# Tell the dictionary about this object.
-			_level_dictionary.add_game_node(object, tile_id)
+			_level_dictionary.add_game_node(object)
 	
 	# Ok, now hide the level map.
 	self.tileset_node.visible = false
