@@ -52,5 +52,5 @@ func build_level():
 			object.translate(Vector3(vec2d.x, 0, vec2d.y))
 			self.add_child(object)
 	
-	# Ok, now hide the level.
+	# Ok, now hide the level map.
 	self.tileset_node.visible = false
