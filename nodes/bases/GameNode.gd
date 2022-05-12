@@ -157,6 +157,14 @@ func get_state():
 	"""
 	return _current_state
 
+func get_transition_state():
+	"""
+	Returns the state we are exiting, assuming that
+	we are currently in a state transition.
+	Null if we are not in a transition.
+	"""
+	return _transition_state
+
 """
 Process methods
 """
