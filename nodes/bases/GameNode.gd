@@ -28,6 +28,7 @@ export var ypos = 0
 # External attributes.
 # Set on the node from an external editor.
 var external_attributes = {}
+var external_attribute_function_hooks = {}
 
 """
 Godot node methods
@@ -36,8 +37,10 @@ Godot node methods
 func _ready():
 	# Default GameNode attributes
 	set_attribute("Active", 1)
+	set_attribute("ButtonActive", 0)
 	set_attribute("ProcessActive", 1)
 	set_attribute("PhysicsActive", 1)
+	set_attribute("GameIDIgnore", [])
 
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
@@ -72,12 +75,55 @@ func set_attribute(key, value):
 	Sets an attribute on this object.
 	"""
 	external_attributes[key] = value
+	
+	# Call any function hooks.
+	var func_hooks = external_attribute_function_hooks.get(key, [])
+	for func_ref in func_hooks:
+		func_ref.call_func(value)
+
+func add_to_attribute(key, value):
+	"""
+	Adds to an attribute on this object.
+	Must be a list.
+	"""
+	var attr_list = external_attributes.get(key, [])
+	attr_list.append(value)
+	set_attribute(key, attr_list)
 
 func get_attribute(key):
 	"""
 	Gets an attribute on this object.
 	"""
 	return external_attributes.get(key)
+
+func set_attribute_function(key, func_ref):
+	"""
+	Sets an attribute function.
+	When the attribute updates, the function ref will be called.
+	"""
+	if external_attribute_function_hooks.get(key) == null:
+		external_attribute_function_hooks[key] = []
+	external_attribute_function_hooks[key].append(func_ref)
+
+"""
+Various getters
+"""
+
+func ignores(game_node):
+	"""
+	Sees if this game node "ignores" another one.
+	This is done by comparing this nodes ignore ID list,
+	and seeing if the other game node's ID is in this list.
+	"""
+	return game_node.get_game_node_id() in get_attribute("GameIDIgnore")
+
+func attr_equal(attr, node_a, node_b=null):
+	"""
+	Checks if the attributes are equal between two nodes.
+	"""
+	if node_b == null:
+		node_b = self
+	return node_a.get_attribute(attr) == node_b.get_attribute(attr)
 
 """
 Position methods
@@ -210,8 +256,11 @@ func _physics_process(delta):
 		physics_process_func.call_func(delta)
 
 """
-Collision helper methods
+Dictionary getters
 """
+
+func get_all_game_nodes():
+	return self._level_dictionary._all_objects
 
 func check_tile_logic(xpos, ypos, relative=true):
 	"""

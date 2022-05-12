@@ -8,7 +8,7 @@ The job of the LevelDictionary is to keep up with the full tilemap of the level.
 Has accessor methods to view different tile IDs.
 """
 
-# A complete list of all objects.
+# A complete list of all objects (GameNode).
 var _all_objects = []
 
 # The object ID dictionary stores object IDs in this pattern:

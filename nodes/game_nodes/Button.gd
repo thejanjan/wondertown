@@ -1,5 +1,13 @@
 extends GameNode
 
+enum ButtonType {
+	Circle = 0
+}
+
+# Button variables.
+var _button_node = null
+
+
 # Node settings.
 func get_game_node_id():
 	return GameNodeIds.GameNodeID.GeneralButton
@@ -7,41 +15,110 @@ func get_game_node_id():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Set attributes.
+	set_attribute("ButtonType", ButtonType.Circle)
+	set_attribute("Color1", [255, 255, 255])
+	set_attribute("Color1Key", 0)
+	set_attribute("_ButtonPressed", 0)
+	
+	add_to_attribute("GameIDIgnore", get_game_node_id())
+	
 	# Initiate states.
-	self.add_state(
-		"Depressed",
+	self.add_state("Initialize", funcref(self, self.button_initialize))
+	self.add_state("Depressed",
 		null,
+		funcref(self, self.on_button_press),
+		funcref(self, self.process_depress),
+		null
+	)
+	self.add_state("Pressed",
 		null,
-		funcref(self, "_do_translate"),
-		funcref(self, "_attempt_movement")
+		funcref(self, self.on_button_depress),
+		funcref(self, self.process_press),
+		null
 	)
 	
-	# Enter play state.
+	# Go through states.
+	self.request("Initialize")
 	self.request("Depressed")
 
 
-func _do_translate(delta):
-	# If we are moving, do the translation action.
-	self.translation = self.translation.move_toward(
-		self.get_pos_as_vector() + Vector3(0, 1, 0),
-		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
-	);
-
-
-func _attempt_movement(delta):
-	# Attempts to move this object a certain way.
-	if self.movement_debounce > 0:
-		# Cannot move at this time
-		self.movement_debounce -= 1;
-		return;
+func button_initialize():
+	"""
+	Initializes button properties, such as the 
+	appearance of the button.
+	"""
+	# Hide all children.
+	for child in self.get_children():
+		child.visible = false
 	
-	# Attempt to move according to keymap.
-	for key in self.key_map:
-		var vec = self.key_map[key];
-		if Input.is_key_pressed(key):
-			var xpos = vec[0]
-			var ypos = vec[1]
-			if self.check_tile_logic(xpos, ypos) == TileEnums.TileLogic.Floor:
-				self.move_pos(xpos, ypos)
-				self.movement_debounce = self.movement_delay - 1;
-				return;
+	# First, we gotta find what button we're trying to use.
+	if get_attribute("ButtonType") == ButtonType.Circle:
+		# Circle Button
+		_button_node = $Circle
+	
+	# Set the color of our button node.
+	update_button_color()
+
+"""
+Button transitions
+"""
+
+func on_button_press():
+	"""
+	Looks for all GameNodes with equal Color1 and Color1Key
+	and sets their ButtonActive attribute.
+	"""
+	update_button_color(0.25)
+	for node in get_all_game_nodes():
+		if self.attr_equal("Color1", node) and self.attr_equal("Color1Key", node):
+			node.set_attribute("_ButtonPressed", 1)
+	
+func on_button_depress():
+	"""
+	Looks for all GameNodes with equal Color1 and Color1Key
+	and sets their ButtonActive attribute.
+	"""
+	update_button_color()
+	for node in get_all_game_nodes():
+		if self.attr_equal("Color1", node) and self.attr_equal("Color1Key", node):
+			node.set_attribute("_ButtonPressed", 0)
+
+"""
+Button process variables
+"""
+
+func process_press(delta):
+	"""
+	Decide if we should enter the unpress state,
+	depending on our current button type.
+	"""
+	if get_attribute("ButtonType") == ButtonType.Circle:
+		for node in _level_dictionary.get_objects_at_pos(xpos, ypos):
+			if not node.ignores(self):
+				# There is a node at our position that doesn't ignore us,
+				# do not enter the depressed state.
+				return
+		# Ok, there is no other node at this position.
+		# I am so depressed.
+		self.request("Depressed")
+	
+func process_depress(delta):
+	if get_attribute("ButtonType") == ButtonType.Circle:
+		for node in _level_dictionary.get_objects_at_pos(xpos, ypos):
+			if not node.ignores(self):
+				# There is a node at our position that doesn't ignore us,
+				# we should enter the press state.
+				self.request("Pressed")
+
+"""
+Button visual state
+"""
+
+func update_button_color(mult=1.0):
+	"""
+	Updates the button color.
+	"""
+	var c1 = get_attribute("Color1")
+	var c1_color = Color(c1[0] * mult, c1[1] * mult, c1[2] * mult)
+	_button_node.find_node("Color1").get_surface_material(0).albedo_color = c1_color

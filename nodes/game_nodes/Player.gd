@@ -40,11 +40,6 @@ func _do_translate(delta):
 		self.get_pos_as_vector() + Vector3(0, 1, 0),
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
-	
-	if Input.is_key_pressed(KEY_1):
-		set_attribute("PhysicsActive", 0)
-	if Input.is_key_pressed(KEY_2):
-		set_attribute("PhysicsActive", 1)
 
 
 func _attempt_movement(delta):
