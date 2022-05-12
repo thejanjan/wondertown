@@ -17,29 +17,66 @@ func get_game_node_id():
 # has a built-in dict from object id to object.
 var id = null
 
-# Object properties.
-export var xpos = 0
-export var ypos = 0
-
 # References to level singletons.
 var _level_manager = null
 var _level_dictionary = null
 
+# Object properties.
+export var xpos = 0
+export var ypos = 0
+
+# External attributes.
+# Set on the node from an external editor.
+var external_attributes = {}
+
+"""
+Godot node methods
+"""
 
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
-	Initialize the GameNode. Do not override.
+	Initialize the GameNode.
+	Can be overridden to add new default attributes.
 	"""
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
-
+	
+	# Default GameNode attributes
+	set_attribute("Active", 1)
+	set_attribute("ProcessActive", 1)
+	set_attribute("PhysicsActive", 1)
 
 func _cleanup():
 	"""
 	Called whenever the game node enters the Off state.
 	"""
 	pass
+
+"""
+External attributes
+"""
+
+func update_attribute_dict(attr_dict):
+	"""
+	When building the TileNode, we get the attribute dict
+	from the WTL file and apply it to this object.
+	"""
+	for key in attr_dict:
+		var value = attr_dict[key]
+		set_attribute(key, value)
+	
+func set_attribute(key, value):
+	"""
+	Sets an attribute on this object.
+	"""
+	external_attributes[key] = value
+
+func get_attribute(key):
+	"""
+	Gets an attribute on this object.
+	"""
+	return external_attributes.get(key)
 
 """
 Position methods
@@ -128,6 +165,12 @@ func _process(delta):
 	"""
 	Process is handled state-by-state.
 	"""
+	# No process if we are inactive.
+	if not get_attribute("Active"):
+		return
+	if not get_attribute("ProcessActive"):
+		return
+	
 	var state = get_state()
 	
 	# Figure out what our callback should be.
@@ -142,6 +185,12 @@ func _physics_process(delta):
 	"""
 	Process is handled state-by-state.
 	"""
+	# No process if we are inactive.
+	if not get_attribute("Active"):
+		return
+	if not get_attribute("PhysicsActive"):
+		return
+	
 	var state = get_state()
 	
 	# Figure out what our callback should be.

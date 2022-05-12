@@ -8,6 +8,7 @@ Keeps track of all GameNodeIDs.
 enum GameNodeID {
 	TestBox = 0
 	TestPlayer = 1
+	GeneralButton = 2
 }
 
 

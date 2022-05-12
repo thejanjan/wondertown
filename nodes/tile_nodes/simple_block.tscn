@@ -3,8 +3,8 @@
 [ext_resource path="res://nodes/tile_nodes/simple_block.gd" type="Script" id=1]
 
 [node name="FloorBlock" type="CSGBox"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00274685, 0.0031381, -0.0054859 )
 width = 1.0
-height = 1.0
+height = 0.001
 depth = 1.0
 script = ExtResource( 1 )
