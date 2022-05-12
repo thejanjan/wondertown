@@ -38,7 +38,7 @@ func _post_init():
 func _do_translate(delta):
 	# If we are moving, do the translation action.
 	self.translation = self.translation.move_toward(
-		self.get_pos_as_vector() + Vector3(0, 1, 0),
+		self.get_pos_as_vector(),
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
 
