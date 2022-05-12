@@ -3,7 +3,7 @@
 [ext_resource path="res://nodes/game_nodes/Button.gd" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+albedo_color = Color( 0.254902, 0.254902, 0.254902, 1 )
 
 [node name="Button" type="Spatial"]
 script = ExtResource( 1 )
@@ -22,4 +22,3 @@ radius = 0.4
 height = 0.086
 sides = 12
 smooth_faces = false
-material = SubResource( 1 )

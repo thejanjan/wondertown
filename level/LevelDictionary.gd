@@ -100,6 +100,8 @@ func get_objects_at_pos(xpos, ypos):
 	"""
 	Returns a list of all objects at a given position.
 	"""
+	xpos = round(xpos)
+	ypos = round(ypos)
 	if not _object_position_dict.get(xpos):
 		return []
 	if not _object_position_dict[xpos].get(ypos):

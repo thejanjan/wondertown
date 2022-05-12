@@ -17,7 +17,7 @@ func get_game_node_id():
 func _ready():
 	# Set attributes.
 	set_attribute("ButtonType", ButtonType.Circle)
-	set_attribute("Color1", [255, 255, 255])
+	set_attribute("Color1", [1, 1, 1])
 	set_attribute("Color1Key", 0)
 	set_attribute("_ButtonPressed", 0)
 	
@@ -58,6 +58,8 @@ func button_initialize():
 		self._button_node = $Circle
 	
 	# Set the color of our button node.
+	self._button_node.visible = true
+	self._button_node.find_node("Color1").material = SpatialMaterial.new()
 	update_button_color()
 
 """
