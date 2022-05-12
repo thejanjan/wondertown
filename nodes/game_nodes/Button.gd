@@ -2,6 +2,7 @@ extends GameNode
 
 enum ButtonType {
 	Circle = 0
+	Square = 1
 }
 
 # Button variables.
@@ -16,6 +17,7 @@ func get_game_node_id():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Set attributes.
+	set_attribute("ButtonType", ButtonType.Square)
 	set_attribute("Color1", [1, 1, 1])
 	set_attribute("Color1Key", 0)
 	set_attribute("_ButtonPressed", 0)
@@ -53,6 +55,10 @@ func button_initialize():
 		child.visible = false
 	
 	# First, we gotta find what button we're trying to use.
+	self._button_node = {
+		ButtonType.Circle: $Circle,
+		ButtonType.Square: $Square
+	}.get(get_attribute("ButtonType"))
 	
 	# Set the color of our button node.
 	self._button_node.visible = true
@@ -103,6 +109,7 @@ func process_press(delta):
 		self.request("Depressed")
 	
 func process_depress(delta):
+	if get_attribute("ButtonType") in [ButtonType.Circle, ButtonType.Square]:
 		for node in _level_dictionary.get_objects_at_pos(xpos, ypos):
 			if not node.ignores(self):
 				# There is a node at our position that doesn't ignore us,
