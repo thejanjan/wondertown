@@ -16,9 +16,19 @@
 			"positions": [[10, 6]]
 		},
 		{
+			"id": 2,
+			"attributes": {"ButtonType": 1, "Color": [1, 0.1, 0.1]},
+			"positions": [[8, 7]]
+		},
+		{
 			"id": 3,
 			"attributes": {},
 			"positions": [[6, 4]]
+		},
+		{
+			"id": 3,
+			"attributes": {"Color": [1, 0.1, 0.1]},
+			"positions": [[6, 8]]
 		}
 	],
 	"tile_nodes": [
@@ -100,6 +110,7 @@
 				[3, 8],
 				[4, 8],
 				[5, 8],
+				[6, 8],
 				[7, 8],
 				[8, 8],
 				[9, 8],
