@@ -65,6 +65,7 @@ func _build_game_nodes(level_data):
 		# Get the properties of this game node.
 		var id = int(game_node_data["id"])
 		var positions_list = game_node_data["positions"]
+		var attr_dict = game_node_data["attributes"]
 		
 		# Build an instance of this game node at each position.
 		for position in positions_list:
@@ -80,6 +81,9 @@ func _build_game_nodes(level_data):
 			# Set the properties of this node.
 			object.initialize(_current_id, _level_manager, _level_dictionary)
 			_current_id += 1
+			
+			# Update the object's attributes.
+			object.update_attribute_dict(attr_dict)
 			
 			# Tell the dictionary about this object.
 			_level_dictionary.add_game_node(object)

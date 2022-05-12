@@ -2,6 +2,7 @@
 	"game_nodes": [
 		{
 			"id": 1,
+			"attributes": {},
 			"positions": [[2, 6]]
 		}
 	],
