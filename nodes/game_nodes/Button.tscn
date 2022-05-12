@@ -17,7 +17,7 @@ sides = 12
 smooth_faces = false
 material = SubResource( 1 )
 
-[node name="Color1" type="CSGCylinder" parent="Circle"]
+[node name="Color" type="CSGCylinder" parent="Circle"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000894785, 0.0914379, -0.00495708 )
 radius = 0.4
 height = 0.086
@@ -31,7 +31,7 @@ height = 0.103
 depth = 1.0
 material = SubResource( 1 )
 
-[node name="Color1" type="CSGBox" parent="Square"]
+[node name="Color" type="CSGBox" parent="Square"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000894785, 0.0914379, -0.00495708 )
 width = 0.8
 height = 0.086

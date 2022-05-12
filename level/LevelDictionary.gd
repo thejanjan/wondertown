@@ -114,6 +114,15 @@ func get_tile_logic_at_pos(xpos, ypos):
 	"""
 	xpos = round(xpos)
 	ypos = round(ypos)
+	
+	# First, decide if we have an object at this pos with a logic override.
+	for node in get_objects_at_pos(xpos, ypos):
+		var logic_override_list = node.get_attribute("TileLogicOverride")
+		if logic_override_list:
+			# First one wins
+			return logic_override_list[0]
+	
+	# If not, just grab the tile's logic.
 	if not _tile_position_dict.get(xpos):
 		return TileEnums.TileLogic.None
 	if not _tile_position_dict[xpos].get(ypos):

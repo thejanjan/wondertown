@@ -8,8 +8,18 @@
 		{
 			"id": 2,
 			"attributes": {},
+			"positions": [[4, 4]]
+		},
+		{
+			"id": 2,
+			"attributes": {"ButtonType": 1},
 			"positions": [[10, 6]]
 		},
+		{
+			"id": 3,
+			"attributes": {},
+			"positions": [[6, 4]]
+		}
 	],
 	"tile_nodes": [
 		{
@@ -43,6 +53,7 @@
 				[3, 4],
 				[4, 4],
 				[5, 4],
+				[6, 4],
 				[7, 4],
 				[8, 4],
 				[9, 4],

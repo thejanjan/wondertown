@@ -41,6 +41,9 @@ func _ready():
 	set_attribute("ProcessActive", 1)
 	set_attribute("PhysicsActive", 1)
 	set_attribute("GameIDIgnore", [])
+	
+	# Private GameNode attributes
+	set_attribute("TileLogicOverride", [])
 
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
