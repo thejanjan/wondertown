@@ -33,6 +33,12 @@ var external_attributes = {}
 Godot node methods
 """
 
+func _ready():
+	# Default GameNode attributes
+	set_attribute("Active", 1)
+	set_attribute("ProcessActive", 1)
+	set_attribute("PhysicsActive", 1)
+
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
 	Initialize the GameNode.
@@ -41,11 +47,6 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
-	
-	# Default GameNode attributes
-	set_attribute("Active", 1)
-	set_attribute("ProcessActive", 1)
-	set_attribute("PhysicsActive", 1)
 
 func _cleanup():
 	"""
