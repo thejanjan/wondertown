@@ -29,7 +29,8 @@ func _ready():
 		funcref(self, "_do_translate"),
 		funcref(self, "_attempt_movement")
 	)
-	
+
+func _post_init():
 	# Enter play state.
 	self.request("Play")
 

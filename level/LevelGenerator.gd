@@ -79,11 +79,9 @@ func _build_game_nodes(level_data):
 			self.add_child(object)
 			
 			# Set the properties of this node.
+			object.update_attribute_dict(attr_dict)
 			object.initialize(_current_id, _level_manager, _level_dictionary)
 			_current_id += 1
-			
-			# Update the object's attributes.
-			object.update_attribute_dict(attr_dict)
 			
 			# Tell the dictionary about this object.
 			_level_dictionary.add_game_node(object)

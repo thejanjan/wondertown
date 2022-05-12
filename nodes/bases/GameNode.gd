@@ -45,11 +45,18 @@ func _ready():
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
 	Initialize the GameNode.
-	Can be overridden to add new default attributes.
 	"""
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
+	self._post_init()
+	
+func _post_init():
+	"""
+	Can be overriden.
+	Use this to initialize state after attributes are set.
+	"""
+	pass
 
 func _cleanup():
 	"""
