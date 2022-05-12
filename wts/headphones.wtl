@@ -4,7 +4,12 @@
 			"id": 1,
 			"attributes": {},
 			"positions": [[2, 6]]
-		}
+		},
+		{
+			"id": 2,
+			"attributes": {},
+			"positions": [[10, 6]]
+		},
 	],
 	"tile_nodes": [
 		{

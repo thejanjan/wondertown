@@ -25,6 +25,3 @@ func _ready():
 	
 	# Build the test tileset.
 	_level_generator.build_level()
-	
-	# Get the level dictionary.
-	_level_dictionary = _level_generator.get_level_dictionary()

@@ -24,17 +24,17 @@ func _ready():
 	add_to_attribute("GameIDIgnore", get_game_node_id())
 	
 	# Initiate states.
-	self.add_state("Initialize", funcref(self, self.button_initialize))
+	self.add_state("Initialize", funcref(self, "button_initialize"))
 	self.add_state("Depressed",
 		null,
-		funcref(self, self.on_button_press),
-		funcref(self, self.process_depress),
+		funcref(self, "on_button_press"),
+		funcref(self, "process_depress"),
 		null
 	)
 	self.add_state("Pressed",
 		null,
-		funcref(self, self.on_button_depress),
-		funcref(self, self.process_press),
+		funcref(self, "on_button_depress"),
+		funcref(self, "process_press"),
 		null
 	)
 	
@@ -55,7 +55,7 @@ func button_initialize():
 	# First, we gotta find what button we're trying to use.
 	if get_attribute("ButtonType") == ButtonType.Circle:
 		# Circle Button
-		_button_node = $Circle
+		self._button_node = $Circle
 	
 	# Set the color of our button node.
 	update_button_color()
@@ -121,4 +121,4 @@ func update_button_color(mult=1.0):
 	"""
 	var c1 = get_attribute("Color1")
 	var c1_color = Color(c1[0] * mult, c1[1] * mult, c1[2] * mult)
-	_button_node.find_node("Color1").get_surface_material(0).albedo_color = c1_color
+	_button_node.find_node("Color1").material.albedo_color = c1_color

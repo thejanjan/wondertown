@@ -15,6 +15,7 @@ enum GameNodeID {
 const GameNodeIDInstances = {
 	GameNodeID.TestBox: preload("res://nodes/tile_nodes/simple_block.tscn"),
 	GameNodeID.TestPlayer: preload("res://nodes/game_nodes/player.tscn"),
+	GameNodeID.GeneralButton: preload("res://nodes/game_nodes/Button.tscn"),
 }
 
 

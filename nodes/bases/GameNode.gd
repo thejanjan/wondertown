@@ -188,7 +188,7 @@ func request(state_name, exit_args=[], enter_args=[]):
 		exit_func.call_funcv(exit_args)
 	
 	# Call our entrance function.
-	var enter_func = state_list[state_name][1]
+	var enter_func = state_list[state_name][0]
 	if (enter_func != null):
 		enter_func.call_funcv(enter_args)
 	
