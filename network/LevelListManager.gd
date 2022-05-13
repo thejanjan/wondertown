@@ -1,5 +1,7 @@
 extends Label
 
+signal level_selected
+
 onready var itemList = get_parent().find_node("ItemList")
 var wtl_files = []
 
@@ -15,7 +17,12 @@ func reload_files():
 	# Create buttons for the levelListMgr.
 	itemList.clear()
 	for name in wtl_files:
-		itemList.add_item(name, null, true)
+		itemList.add_item(name[1], null, true)
+
+func on_index_click(i: int):
+	emit_signal(
+		"level_selected", wtl_files[i][0], wtl_files[i][1]
+	)
 	
 """
 Directory accessors
@@ -27,7 +34,7 @@ func find_all_wtl_files():
 	for file_data in normal_files_in_directory:
 		var filename = file_data[0]
 		if filename.ends_with('.wtl'):
-			retlist.append(filename)
+			retlist.append(file_data)
 	return retlist
 
 	

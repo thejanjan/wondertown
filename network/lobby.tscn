@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://network/lobby.gd" type="Script" id=1]
 [ext_resource path="res://network/Players.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://network/lobby/PlayerNameBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://network/Chatbox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://network/LevelListManager.gd" type="Script" id=6]
+[ext_resource path="res://network/LevelStatus.gd" type="Script" id=7]
 
 [node name="Lobby" type="Control"]
 script = ExtResource( 1 )
@@ -122,7 +123,7 @@ margin_bottom = 578.442
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="LevelListManager" type="Label" parent="PostConnection"]
+[node name="LevelList" type="Label" parent="PostConnection"]
 margin_left = 36.6916
 margin_top = 16.5534
 margin_right = 97.6916
@@ -133,7 +134,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="ItemList" parent="PostConnection/LevelListManager"]
+[node name="ItemList" type="ItemList" parent="PostConnection/LevelList"]
 margin_left = -18.0
 margin_top = 19.0
 margin_right = 254.0
@@ -142,7 +143,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ReloadButton" type="Button" parent="PostConnection/LevelListManager"]
+[node name="ReloadButton" type="Button" parent="PostConnection/LevelList"]
 margin_left = 150.47
 margin_top = -5.69308
 margin_right = 244.47
@@ -157,6 +158,21 @@ margin_left = 314.0
 margin_top = 365.0
 margin_right = -250.0
 margin_bottom = -20.0
+
+[node name="LevelStatus" type="Panel" parent="PostConnection"]
+margin_left = 430.229
+margin_top = 23.7858
+margin_right = 832.229
+margin_bottom = 223.786
+script = ExtResource( 7 )
+
+[node name="LevelName" type="Label" parent="PostConnection/LevelStatus"]
+margin_left = 15.3847
+margin_top = 12.7279
+margin_right = 131.385
+margin_bottom = 26.7279
+rect_scale = Vector2( 1.25, 1.25 )
+text = "No level selected."
 
 [node name="Debug" type="Control" parent="."]
 visible = false
@@ -179,5 +195,7 @@ script = ExtResource( 3 )
 [connection signal="updated_player_names" from="PostConnection/ConnectedPlayerLabel/Players" to="PostConnection/Chatbox" method="get_player_names"]
 [connection signal="pressed" from="PostConnection/LeaveLobby" to="." method="leave_lobby"]
 [connection signal="text_entered" from="PostConnection/PlayerName" to="PostConnection/ConnectedPlayerLabel/Players" method="request_name"]
-[connection signal="pressed" from="PostConnection/LevelListManager/ReloadButton" to="PostConnection/LevelListManager" method="reload_files"]
+[connection signal="level_selected" from="PostConnection/LevelList" to="PostConnection/LevelStatus" method="on_level_selected"]
+[connection signal="item_activated" from="PostConnection/LevelList/ItemList" to="PostConnection/LevelList" method="on_index_click"]
+[connection signal="pressed" from="PostConnection/LevelList/ReloadButton" to="PostConnection/LevelList" method="reload_files"]
 [connection signal="pressed" from="Debug/ClientLauncher" to="Debug/ClientLauncher" method="_on_ClientLauncher_pressed"]
