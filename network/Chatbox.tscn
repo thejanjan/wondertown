@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://network/chat/ChatTextEntry.gd" type="Script" id=1]
+[ext_resource path="res://network/ChatMessageLabel.gd" type="Script" id=2]
+[ext_resource path="res://network/Chatbox.gd" type="Script" id=3]
+[ext_resource path="res://network/MessageLogger.gd" type="Script" id=4]
+
+[node name="Chatbox" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -570.0
+margin_bottom = -388.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Panel" parent="."]
+margin_right = 454.0
+margin_bottom = 180.0
+
+[node name="MessageLogger" type="ScrollContainer" parent="Top"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 446.0
+margin_bottom = 168.0
+follow_focus = true
+scroll_horizontal_enabled = false
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChatMessages" type="Label" parent="Top/MessageLogger"]
+margin_right = 438.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 0, 160 )
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 6
+valign = 2
+autowrap = true
+script = ExtResource( 2 )
+
+[node name="Bottom" type="Panel" parent="."]
+margin_top = 180.0
+margin_right = 454.0
+margin_bottom = 212.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MessageBox" type="LineEdit" parent="Bottom"]
+margin_left = 1.68502
+margin_top = -1.68825
+margin_right = 451.685
+margin_bottom = 30.3118
+placeholder_text = "Press T to type."
+caret_blink = true
+caret_blink_speed = 0.5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="chat_received" from="." to="Top/MessageLogger/ChatMessages" method="_on_Chatbox_chat_received"]
+[connection signal="draw" from="Top/MessageLogger" to="Top/MessageLogger" method="_on_MessageLogger_draw"]
+[connection signal="updated_chat_label" from="Top/MessageLogger/ChatMessages" to="Top/MessageLogger" method="_on_ChatMessages_updated_chat_label"]
+[connection signal="text_entered" from="Bottom/MessageBox" to="Bottom/MessageBox" method="_on_MessageBox_text_entered"]
+[connection signal="text_entered" from="Bottom/MessageBox" to="." method="_on_MessageBox_text_entered"]

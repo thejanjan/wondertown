@@ -5,6 +5,7 @@ extends Control
 # https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
 const DEFAULT_PORT = 8910
 
+onready var connection = $Connection
 onready var address = $Connection/Address
 onready var host_button = $Connection/HostButton
 onready var join_button = $Connection/JoinButton

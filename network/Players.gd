@@ -1,5 +1,6 @@
 extends ItemList
 
+signal updated_player_names
 var player_names = {}
 
 
@@ -32,6 +33,7 @@ remotesync func update_player_list(player_names):
 	# Do we update our player name list?
 	if not is_network_master():
 		self.player_names = player_names
+	emit_signal("updated_player_names", player_names)
 	
 	_update_gui()
 

@@ -1,0 +1,1 @@
+godot --path D:\\Wondertown --export-debug Windows ./debug-client-wt.exe
