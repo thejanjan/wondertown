@@ -1,0 +1,131 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://network/lobby.gd" type="Script" id=1]
+[ext_resource path="res://network/Players.gd" type="Script" id=2]
+[ext_resource path="res://network/ClientLauncher.gd" type="Script" id=3]
+
+[node name="Lobby" type="Panel"]
+margin_left = 2.33484
+margin_right = 1027.33
+margin_bottom = 597.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Connection" type="Panel" parent="."]
+margin_left = 388.118
+margin_top = 203.847
+margin_right = 636.118
+margin_bottom = 358.847
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Connection"]
+margin_top = 14.5681
+margin_right = 248.0
+margin_bottom = 43.5681
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Wondertown (ALPHA)"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="LineEdit" parent="Connection"]
+margin_left = 47.2125
+margin_top = 42.7272
+margin_right = 201.213
+margin_bottom = 66.7272
+placeholder_text = "Username"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Address" type="LineEdit" parent="Connection"]
+margin_left = 47.2125
+margin_top = 72.6134
+margin_right = 201.213
+margin_bottom = 96.6134
+placeholder_text = "127.0.0.1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostButton" type="Button" parent="Connection"]
+margin_left = 37.1217
+margin_top = 115.516
+margin_right = 101.122
+margin_bottom = 139.516
+text = "Host"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinButton" type="Button" parent="Connection"]
+margin_left = 145.408
+margin_top = 115.516
+margin_right = 209.408
+margin_bottom = 139.516
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PostConnection" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConnectedPlayerLabel" type="Label" parent="PostConnection"]
+margin_left = 780.288
+margin_top = 347.619
+margin_right = 898.288
+margin_bottom = 361.619
+text = "Connected Players"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Players" type="ItemList" parent="PostConnection/ConnectedPlayerLabel"]
+margin_left = -49.2705
+margin_top = 19.5306
+margin_right = 175.729
+margin_bottom = 186.531
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeaveLobby" type="Button" parent="PostConnection"]
+margin_left = 906.949
+margin_top = 20.2043
+margin_right = 997.949
+margin_bottom = 40.2043
+text = "Leave Lobby"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Debug" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ClientLauncher" type="Button" parent="Debug"]
+margin_left = 917.0
+margin_top = 567.0
+margin_right = 1015.0
+margin_bottom = 590.0
+text = "Launch Client"
+script = ExtResource( 3 )
+
+[connection signal="player_list_update" from="." to="PostConnection/ConnectedPlayerLabel/Players" method="update_name_list"]
+[connection signal="text_entered" from="Connection/PlayerName" to="PostConnection/ConnectedPlayerLabel/Players" method="request_name"]
+[connection signal="pressed" from="Connection/HostButton" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Connection/JoinButton" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="PostConnection/LeaveLobby" to="." method="leave_lobby"]
+[connection signal="pressed" from="Debug/ClientLauncher" to="Debug/ClientLauncher" method="_on_ClientLauncher_pressed"]
