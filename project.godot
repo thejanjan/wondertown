@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "TileNode",
 "language": "GDScript",
 "path": "res://nodes/bases/TileNode.gd"
+}, {
+"base": "Node",
+"class": "WondertownLevelData",
+"language": "GDScript",
+"path": "res://wts/WondertownLevelData.gd"
 } ]
 _global_script_class_icons={
 "GameNode": "",
-"TileNode": ""
+"TileNode": "",
+"WondertownLevelData": ""
 }
 
 [application]

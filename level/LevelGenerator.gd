@@ -8,6 +8,7 @@ It will find a LevelTileset node, and then interface with it
 in order create an entire level instance.
 """
 
+const WondertownLevelData = preload("res://wts/WondertownLevelData.gd")
 const LevelTileset = preload("res://level/LevelTileset.gd")
 var _level_data = null
 var _level_manager = null
@@ -31,7 +32,7 @@ func add_level(filepath):
 	var data = _level_io.load_file(filepath)
 	
 	# Hopefully our data read was a success.
-	if (data is Dictionary):
+	if (data is WondertownLevelData):
 		self._level_data = data
 
 func get_level_dictionary():
@@ -51,31 +52,24 @@ func build_level():
 	assert(self._level_data)
 	
 	# Build game nodes and tile data.
-	_build_game_nodes(self._level_data)
+	_build_game_nodes()
 	_build_tile_data(self._level_data)
 
-func _build_game_nodes(level_data):
+func _build_game_nodes():
 	"""
 	Builds all of the game node instances.
 	"""
-	var game_node_list = level_data["game_nodes"]
-	
 	# Build each object in this list.
-	for game_node_data in game_node_list:
+	for game_node_data in self._level_data.get_game_node_data():
 		# Get the properties of this game node.
-		var id = int(game_node_data["id"])
-		var positions_list = game_node_data["positions"]
-		var attr_dict = game_node_data["attributes"]
+		var id = game_node_data.get_id()
+		var attr_dict = game_node_data.get_attributes()
 		
 		# Build an instance of this game node at each position.
-		for position in positions_list:
-			# Get the position for this object.
-			var x = int(position[0])
-			var y = int(position[1])
-			
+		for vec2 in game_node_data.get_positions():
 			# Create the object node.
 			var object := GameNodeIds.make_instance(id) as GameNode
-			object.set_gamenode_pos(x, y, true)
+			object.set_gamenode_pos(vec2.x, vec2.y, true)
 			self.add_child(object)
 			
 			# Set the properties of this node.
@@ -92,24 +86,17 @@ func _build_tile_data(level_data):
 	Still pretty WIP as the TileNode system is not fully robust.
 	(The hooks into the GameNodeIds system will be removed over time.)
 	"""
-	var tile_node_list = level_data["tile_nodes"]
-	
 	# Build each tile in this list.
-	for tile_node_data in tile_node_list:
+	for tile_node_data in self._level_data.get_tile_node_data():
 		# Get the properties of this tile node.
-		var logic = int(tile_node_data["logic"])
-		var visual = int(tile_node_data["visual"])
-		var positions_list = tile_node_data["positions"]
+		var logic = tile_node_data.get_logic()
+		var visual = tile_node_data.get_visual()
 		
 		# Build an instance of this tile node at each position.
-		for position in positions_list:
-			# Get the position for this tile.
-			var x = int(position[0])
-			var y = int(position[1])
-			
+		for vec2 in tile_node_data.get_positions():
 			# Create the tile node.
 			var tile := GameNodeIds.make_instance(0) as TileNode
-			tile.set_tilenode_pos(x, y, true)
+			tile.set_tilenode_pos(vec2.x, vec2.y, true)
 			self.add_child(tile)
 			
 			# Set the properties of this node.

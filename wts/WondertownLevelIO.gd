@@ -5,6 +5,8 @@ extends Node
 An I/O class for managing input and output of Wondertown level files (WTLs).
 """
 
+const WondertownLevelData = preload("WondertownLevelData.gd")
+
 
 func load_file(filename):
 	"""
@@ -27,7 +29,8 @@ func load_file(filename):
 		return false
 	
 	# Return the full WTL dictionary.
-	return parsed_json.result
+	var data_class = WondertownLevelData.new(parsed_json.result)
+	return data_class
 	
 func save_file(filename, level_dictionary):
 	"""
