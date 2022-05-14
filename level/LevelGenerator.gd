@@ -16,6 +16,7 @@ var _level_dictionary = null
 var _level_io = null
 var _current_id = 1
 
+signal make_level_data
 
 func _ready():
 	_level_dictionary = preload("res://level/LevelDictionary.tscn").instance()
@@ -33,13 +34,20 @@ func add_level(filepath):
 	
 	# Hopefully our data read was a success.
 	if (data is WondertownLevelData):
-		self._level_data = data
+		rpc("set_level_data", data.get_dict())
+
+remotesync func set_level_data(data_dict):
+	self._level_data = WondertownLevelData.new(data_dict)
+	emit_signal("make_level_data", self._level_data)
 
 func get_level_dictionary():
 	"""
 	Returns our level dictionary.
 	"""
 	return _level_dictionary
+
+func get_data():
+	return self._level_data
 
 """
 Level Builder

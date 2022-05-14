@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://network/lobby.gd" type="Script" id=1]
 [ext_resource path="res://network/Players.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://network/Chatbox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://network/LevelListManager.gd" type="Script" id=6]
 [ext_resource path="res://network/LevelStatus.gd" type="Script" id=7]
+[ext_resource path="res://network/StartGame.gd" type="Script" id=8]
 
 [node name="Lobby" type="Control"]
 script = ExtResource( 1 )
@@ -165,6 +166,9 @@ margin_top = 23.7858
 margin_right = 832.229
 margin_bottom = 223.786
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LevelName" type="Label" parent="PostConnection/LevelStatus"]
 margin_left = 15.3847
@@ -173,6 +177,17 @@ margin_right = 131.385
 margin_bottom = 26.7279
 rect_scale = Vector2( 1.25, 1.25 )
 text = "No level selected."
+
+[node name="StartGame" type="Button" parent="PostConnection/LevelStatus"]
+margin_left = 293.0
+margin_top = 163.0
+margin_right = 387.0
+margin_bottom = 189.0
+text = "Start Game"
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Debug" type="Control" parent="."]
 visible = false
@@ -195,7 +210,11 @@ script = ExtResource( 3 )
 [connection signal="updated_player_names" from="PostConnection/ConnectedPlayerLabel/Players" to="PostConnection/Chatbox" method="get_player_names"]
 [connection signal="pressed" from="PostConnection/LeaveLobby" to="." method="leave_lobby"]
 [connection signal="text_entered" from="PostConnection/PlayerName" to="PostConnection/ConnectedPlayerLabel/Players" method="request_name"]
+[connection signal="level_selected" from="PostConnection/LevelList" to="." method="_on_LevelList_level_selected"]
 [connection signal="level_selected" from="PostConnection/LevelList" to="PostConnection/LevelStatus" method="on_level_selected"]
 [connection signal="item_activated" from="PostConnection/LevelList/ItemList" to="PostConnection/LevelList" method="on_index_click"]
 [connection signal="pressed" from="PostConnection/LevelList/ReloadButton" to="PostConnection/LevelList" method="reload_files"]
+[connection signal="status_updated" from="PostConnection/LevelStatus" to="PostConnection/LevelStatus/StartGame" method="_on_LevelStatus_status_updated"]
+[connection signal="master_start_game" from="PostConnection/LevelStatus/StartGame" to="." method="_on_StartGame_master_start_game"]
+[connection signal="pressed" from="PostConnection/LevelStatus/StartGame" to="PostConnection/LevelStatus/StartGame" method="_on_StartGame_pressed"]
 [connection signal="pressed" from="Debug/ClientLauncher" to="Debug/ClientLauncher" method="_on_ClientLauncher_pressed"]

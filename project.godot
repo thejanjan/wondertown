@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Barrier",
+"language": "GDScript",
+"path": "res://network/util/Barrier.gd"
+}, {
 "base": "Spatial",
 "class": "GameNode",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://wts/WondertownLevelData.gd"
 } ]
 _global_script_class_icons={
+"Barrier": "",
 "GameNode": "",
 "TileNode": "",
 "WondertownLevelData": ""

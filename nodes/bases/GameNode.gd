@@ -68,6 +68,34 @@ func _cleanup():
 	pass
 
 """
+Network attributes
+"""
+
+func give_control_to(peer_id):
+	"""Gives control of this node to a peer ID."""
+	# Let all clients know about the control update.
+	rpc("_receive_control", peer_id)
+	
+	# Give control to the node.
+	self.set_network_master(peer_id)
+	
+remotesync func _receive_control(peer_id):
+	"""Master tells us who this node is now controled by."""
+	if is_network_master():
+		on_lose_master()
+	self.set_network_master(peer_id)
+	if is_network_master():
+		on_receive_master()
+
+func on_lose_master():
+	"""Called on the master of this node when the master is lost."""
+	pass
+
+func on_receive_master():
+	"""Called on the master of this node when the master is gained."""
+	pass
+
+"""
 External attributes
 """
 

@@ -69,20 +69,6 @@ func _server_disconnected():
 	print("server disconnected")
 	leave_lobby()
 
-##### Game creation functions ######
-
-func _end_game(with_error = ""):
-	if has_node("/root/Pong"):
-		# Erase immediately, otherwise network might show
-		# errors (this is why we connected deferred above).
-		get_node("/root/Pong").free()
-		show()
-
-	get_tree().set_network_peer(null) # Remove peer.
-	host_button.set_disabled(false)
-	join_button.set_disabled(false)
-
-	_set_status(with_error, false)
 
 func leave_lobby():
 	get_tree().set_network_peer(null)
@@ -144,3 +130,40 @@ func show_connection_gui(mode: int):
 	else:
 		$Connection.show()
 		$PostConnection.hide()
+
+"""
+Game connections
+"""
+
+var lvl_mgr = null
+var level_path = null
+
+func _on_StartGame_master_start_game():
+	"""
+	Actually start the game.
+	"""
+	rpc("add_game_node")
+	
+remotesync func add_game_node():
+	var lvl_mgr = load("res://level/LevelManager.tscn").instance()
+	# lvl_mgr.connect("game_finished", self, "_end_game", [], CONNECT_DEFERRED)
+	get_tree().get_root().add_child(lvl_mgr)
+	hide()
+	
+	if get_tree().is_network_server():
+		lvl_mgr.begin(active_players, level_path)
+
+func _end_game():
+	if has_node("/root/LevelManager"):
+		# Erase immediately, otherwise network might show
+		# errors (this is why we connected deferred above).
+		get_node("/root/LevelManager").free()
+		show()
+
+	get_tree().set_network_peer(null) # Remove peer.
+	host_button.set_disabled(false)
+	join_button.set_disabled(false)
+
+
+func _on_LevelList_level_selected(name, path):
+	level_path = path

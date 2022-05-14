@@ -6,13 +6,16 @@ A container file for level data of a WTL.
 Provides an interface for getting level data.
 """
 
-var level_dict = null
+var level_dict = {}
 var game_node_data_array = null
 var tile_node_data_array = null
 
 func _init(level_dict):
 	"""Obtains the level dict from json data."""
 	self.level_dict = level_dict
+	
+func get_dict():
+	return self.level_dict
 
 """
 Data builders

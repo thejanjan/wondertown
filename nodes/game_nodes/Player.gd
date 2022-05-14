@@ -42,9 +42,11 @@ func _do_translate(delta):
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
 
-
 func _attempt_movement(delta):
 	# Attempts to move this object a certain way.
+	if not is_network_master():
+		return
+	
 	if self.movement_debounce > 0:
 		# Cannot move at this time
 		self.movement_debounce -= 1;
@@ -60,3 +62,9 @@ func _attempt_movement(delta):
 				self.move_pos(xpos, ypos)
 				self.movement_debounce = self.movement_delay - 1;
 				return;
+
+func on_lose_master():
+	$Camera.clear_current()
+
+func on_receive_master():
+	$Camera.make_current()
