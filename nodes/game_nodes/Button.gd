@@ -37,7 +37,7 @@ func _ready():
 		null
 	)
 
-func _post_init():
+remotesync func _post_init():
 	# Go through states.
 	self.request("Initialize")
 	self.request("Depressed")
@@ -98,7 +98,7 @@ func process_press(delta):
 	depending on our current button type.
 	"""
 	if get_attribute("ButtonType") == ButtonType_Circle:
-		for node in _level_dictionary.get_objects_at_pos(xpos, ypos):
+		for node in _level_dictionary.get_objects_at_pos(get_xpos(), get_ypos()):
 			if not node.ignores(self):
 				# There is a node at our position that doesn't ignore us,
 				# do not enter the depressed state.
@@ -109,7 +109,7 @@ func process_press(delta):
 	
 func process_depress(delta):
 	if get_attribute("ButtonType") in [ButtonType_Circle, ButtonType_Square]:
-		for node in _level_dictionary.get_objects_at_pos(xpos, ypos):
+		for node in _level_dictionary.get_objects_at_pos(get_xpos(), get_ypos()):
 			if not node.ignores(self):
 				# There is a node at our position that doesn't ignore us,
 				# we should enter the press state.

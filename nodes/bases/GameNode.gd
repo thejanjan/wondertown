@@ -21,10 +21,6 @@ var id = null
 var _level_manager = null
 var _level_dictionary = null
 
-# Object properties.
-export var xpos = 0
-export var ypos = 0
-
 # External attributes.
 # Set on the node from an external editor.
 var external_attributes = {}
@@ -36,6 +32,9 @@ Godot node methods
 
 func _ready():
 	# Default GameNode attributes
+	set_attribute("xpos", 0)
+	set_attribute("ypos", 0)
+	
 	set_attribute("Active", 1)
 	set_attribute("ButtonActive", 0)
 	set_attribute("ProcessActive", 1)
@@ -52,9 +51,12 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	id = set_id
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
-	self._post_init()
 	
-func _post_init():
+	# Post init now.
+	# Do as RPC to avoid race conditions with attributes
+	rpc("_post_init")
+	
+remotesync func _post_init():
 	"""
 	Can be overriden.
 	Use this to initialize state after attributes are set.
@@ -113,11 +115,15 @@ func set_attribute(key, value):
 	Sets an attribute on this object.
 	"""
 	external_attributes[key] = value
+	rpc("network_attribute", key, value)
 	
 	# Call any function hooks.
 	var func_hooks = external_attribute_function_hooks.get(key, [])
 	for func_ref in func_hooks:
 		func_ref.call_func(value)
+
+remotesync func network_attribute(key, value):
+	external_attributes[key] = value
 
 func add_to_attribute(key, value):
 	"""
@@ -171,23 +177,23 @@ func set_gamenode_pos(xpos, ypos, translate=false):
 	"""
 	Sets the gamenode's position.
 	"""
-	self.xpos = xpos
-	self.ypos = ypos
+	set_attribute("xpos", xpos)
+	set_attribute("ypos", ypos)
 	if translate:
 		self.translate(Vector3(xpos, 0, ypos))
 
 
 func move_pos(xpos_diff, ypos_diff, translate=false):
-	set_gamenode_pos(self.xpos + xpos_diff, self.ypos + ypos_diff, translate)
+	set_gamenode_pos(get_xpos() + xpos_diff, get_ypos() + ypos_diff, translate)
 	
 func get_pos_as_vector():
-	return Vector3(xpos, 0, ypos)
+	return Vector3(get_xpos(), 0, get_ypos())
 	
 func get_xpos():
-	return xpos
+	return get_attribute("xpos")
 	
 func get_ypos():
-	return ypos
+	return get_attribute("ypos")
 
 """
 FSM pattern
@@ -307,5 +313,5 @@ func check_tile_logic(xpos, ypos, relative=true):
 	if not relative:
 		return _level_dictionary.get_tile_logic_at_pos(xpos, ypos)
 	else:
-		return _level_dictionary.get_tile_logic_at_pos(self.xpos + xpos, self.ypos + ypos)
+		return _level_dictionary.get_tile_logic_at_pos(get_xpos() + xpos, get_ypos() + ypos)
 		

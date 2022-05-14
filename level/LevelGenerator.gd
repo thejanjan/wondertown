@@ -77,8 +77,8 @@ func _build_game_nodes():
 		for vec2 in game_node_data.get_positions():
 			# Create the object node.
 			var object := GameNodeIds.make_instance(id) as GameNode
-			object.set_gamenode_pos(vec2.x, vec2.y, true)
 			self.add_child(object)
+			object.set_gamenode_pos(vec2.x, vec2.y, true)
 			
 			# Set the properties of this node.
 			object.update_attribute_dict(attr_dict)
