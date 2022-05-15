@@ -8,6 +8,8 @@ It will find a LevelTileset node, and then interface with it
 in order create an entire level instance.
 """
 
+const GeneralTile = preload("res://nodes/tile_nodes/GeneralTile.tscn")
+
 const WondertownLevelData = preload("res://wts/WondertownLevelData.gd")
 const LevelTileset = preload("res://level/LevelTileset.gd")
 var _level_data = null
@@ -103,12 +105,12 @@ func _build_tile_data(level_data):
 		# Build an instance of this tile node at each position.
 		for vec2 in tile_node_data.get_positions():
 			# Create the tile node.
-			var tile := GameNodeIds.make_instance(0) as TileNode
+			var tile = GeneralTile.instance()
 			tile.set_tilenode_pos(vec2.x, vec2.y, true)
 			self.add_child(tile)
 			
 			# Set the properties of this node.
-			tile.initialize(logic, visual)
+			tile.initialize(logic, visual, tile_node_data)
 			
 			# Tell the dictionary about this tile.
 			_level_dictionary.add_tile_node(tile)

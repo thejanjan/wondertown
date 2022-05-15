@@ -130,3 +130,6 @@ class TileNodeData:
 	
 	func get_positions():
 		return self.data.get("positions", [])
+	
+	func get_tex():
+		return self.data.get("tex", [0, 0, 0, 0, 0, 0])

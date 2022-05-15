@@ -2,7 +2,8 @@
 
 [ext_resource path="res://nodes/game_nodes/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://FloorPlanner.gd" type="Script" id=2]
-[ext_resource path="res://nodes/tile_nodes/simple_block.tscn" type="PackedScene" id=3]
+[ext_resource path="res://nodes/tile_nodes/GeneralTile.tscn" type="PackedScene" id=3]
+
 
 [node name="Spatial" type="Spatial"]
 

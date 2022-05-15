@@ -27,12 +27,20 @@ func get_xpos():
 func get_ypos():
 	return ypos
 
-func initialize(logic, visual):
+func initialize(logic, visual, data):
 	"""
 	Initialize the TileNode. Do not override.
 	"""
 	self.logic = logic
 	self.visual = visual
+	self._post_init(data)
+		
+func _post_init(data):
+	"""
+	Special init to be handled by subclasses.
+	Can be overridden.
+	"""
+	pass
 
 """
 Logic handlers

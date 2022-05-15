@@ -35,6 +35,7 @@
 		{
 			"logic": 0,
 			"visual": 0,
+			"tex": ["grass_top", "dirt", "grass_side", "grass_side", "grass_side", "grass_side"],
 			"positions": [
 				[1, 1],
 				[2, 1],

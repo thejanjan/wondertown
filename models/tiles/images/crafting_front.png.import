@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/atlas_mc.png-35d2c4ad8b64b7fdf9a6bbb8c291ef09.stex"
+path="res://.import/crafting_front.png-413b3e5d1ae880702c168f1133e91c4e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/tiles/atlas_mc.png"
-dest_files=[ "res://.import/atlas_mc.png-35d2c4ad8b64b7fdf9a6bbb8c291ef09.stex" ]
+source_file="res://models/tiles/images/crafting_front.png"
+dest_files=[ "res://.import/crafting_front.png-413b3e5d1ae880702c168f1133e91c4e.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

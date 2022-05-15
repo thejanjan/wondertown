@@ -6,7 +6,6 @@ Keeps track of all GameNodeIDs.
 """
 
 enum GameNodeID {
-	TestBox = 0
 	TestPlayer = 1
 	GeneralButton = 2
 	Gate = 3
@@ -14,7 +13,6 @@ enum GameNodeID {
 
 
 const GameNodeIDInstances = {
-	GameNodeID.TestBox: preload("res://nodes/tile_nodes/simple_block.tscn"),
 	GameNodeID.TestPlayer: preload("res://nodes/game_nodes/player.tscn"),
 	GameNodeID.GeneralButton: preload("res://nodes/game_nodes/Button.tscn"),
 	GameNodeID.Gate: preload("res://nodes/game_nodes/Gate.tscn"),
