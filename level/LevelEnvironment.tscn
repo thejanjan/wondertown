@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://level/LevelEnvironment.gd" type="Script" id=1]
+[ext_resource path="res://models/sky/bad_skybox.png" type="Texture" id=2]
 
-[sub_resource type="Environment" id=1]
-background_energy = 0.0
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 2 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 fog_enabled = true
 fog_color = Color( 0.282353, 0.282353, 0.282353, 1 )
@@ -36,5 +41,5 @@ adjustment_contrast = 1.38
 adjustment_saturation = 0.66
 
 [node name="LevelEnvironment" type="WorldEnvironment"]
-environment = SubResource( 1 )
+environment = SubResource( 2 )
 script = ExtResource( 1 )
