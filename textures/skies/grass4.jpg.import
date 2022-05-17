@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/bad_skybox.png-4c02d4c71fcdd36f1ac5bbc9d8b3e80e.s3tc.stex"
-path.etc2="res://.import/bad_skybox.png-4c02d4c71fcdd36f1ac5bbc9d8b3e80e.etc2.stex"
+path.s3tc="res://.import/grass4.jpg-4b60557fe35f1e519012badad3156291.s3tc.stex"
+path.etc2="res://.import/grass4.jpg-4b60557fe35f1e519012badad3156291.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://models/sky/bad_skybox.png"
-dest_files=[ "res://.import/bad_skybox.png-4c02d4c71fcdd36f1ac5bbc9d8b3e80e.s3tc.stex", "res://.import/bad_skybox.png-4c02d4c71fcdd36f1ac5bbc9d8b3e80e.etc2.stex" ]
+source_file="res://textures/skies/grass4.jpg"
+dest_files=[ "res://.import/grass4.jpg-4b60557fe35f1e519012badad3156291.s3tc.stex", "res://.import/grass4.jpg-4b60557fe35f1e519012badad3156291.etc2.stex" ]
 
 [params]
 

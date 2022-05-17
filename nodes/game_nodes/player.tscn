@@ -21,4 +21,4 @@ material = SubResource( 1 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.455824, 0.89007, 0, -0.89007, 0.455824, 0, 6.57147, 3.05026 )
 fov = 75.8
-far = 90.5
+far = 1204.0
