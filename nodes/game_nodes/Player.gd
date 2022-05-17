@@ -8,7 +8,8 @@ func get_game_node_id():
 var movement_delay = 12;
 
 
-# Declare member variables here. Examples:
+# do not touch these
+onready var WSWModel = $WSWModel
 var movement_debounce = 0;
 
 var key_map = {
@@ -17,6 +18,7 @@ var key_map = {
 	KEY_UP: [0, -1],
 	KEY_DOWN: [0, 1],
 };
+var player_angle = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -37,10 +39,17 @@ func _post_init():
 
 func _do_translate(delta):
 	# If we are moving, do the translation action.
+	var goal_vec = self.get_pos_as_vector()
 	self.translation = self.translation.move_toward(
-		self.get_pos_as_vector(),
+		goal_vec,
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
+	
+	if self.translation != goal_vec:
+		WSWModel.rotation_degrees = Vector3(0, player_angle, 0)
+		WSWModel.set_moving_state(true)
+	else:
+		WSWModel.set_moving_state(false)
 
 func _attempt_movement(delta):
 	# Attempts to move this object a certain way.
@@ -61,6 +70,8 @@ func _attempt_movement(delta):
 			if self.check_tile_logic(xpos, ypos) == TileEnums.TileLogic.Floor:
 				self.move_pos(xpos, ypos)
 				self.movement_debounce = self.movement_delay - 1;
+				player_angle = (3 - (key - KEY_LEFT)) * 90
+				WSWModel.set_moving_state(true)
 				return;
 
 func on_lose_master():

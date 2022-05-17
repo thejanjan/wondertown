@@ -11,9 +11,6 @@
 
 [node name="Lobby" type="Control"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Connection" type="Panel" parent="."]
 visible = false
