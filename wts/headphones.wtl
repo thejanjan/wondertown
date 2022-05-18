@@ -2,27 +2,27 @@
 	"game_nodes": [
 		{
 			"id": 1,
-			"attributes": {"Player": 1, "PlayerOwned": 1},
+			"attributes": {"Player": 1},
 			"positions": [[3, 7]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": 2, "PlayerOwned": 1},
+			"attributes": {"Player": 2},
 			"positions": [[2, 6]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": 3, "PlayerOwned": 1},
+			"attributes": {"Player": 3},
 			"positions": [[3, 6]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": 4, "PlayerOwned": 1},
+			"attributes": {"Player": 4},
 			"positions": [[2, 7]]
 		},
 		{
 			"id": 2,
-			"attributes": {},
+			"attributes": {"PlayerOwned": 1},
 			"positions": [[4, 4]]
 		},
 		{

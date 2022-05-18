@@ -18,6 +18,8 @@ var _level_dictionary = null
 var _level_io = null
 var _current_id = 1
 
+var level_built = false
+
 signal make_level_data
 
 func _ready():
@@ -59,6 +61,9 @@ func build_level():
 	"""
 	Builds a level from the currently set tileset.
 	"""
+	if level_built:
+		return
+	level_built = true
 	assert(self._level_data)
 	
 	# Build game nodes and tile data.

@@ -91,11 +91,16 @@ func _ready():
 			stinker_mesh = child
 		elif child is AnimationPlayer:
 			AnimPlayer = child
+			AnimPlayer.connect('animation_started', self,
+							   '_on_AnimationPlayer_animation_started')
 
 func _physics_process(delta):
 	"""
 	decide the current eye texture and apply
 	"""
+	if not stinker_model:
+		return
+	
 	var state = StinkerEyeState.GAMER
 	handle_blink_timer()
 	

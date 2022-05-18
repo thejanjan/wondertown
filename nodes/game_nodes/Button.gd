@@ -28,13 +28,13 @@ func _ready():
 		null,
 		funcref(self, "on_button_press"),
 		funcref(self, "process_depress"),
-		null
+		funcref(self, "player_control")
 	)
 	self.add_state("Pressed",
 		null,
 		funcref(self, "on_button_depress"),
 		funcref(self, "process_press"),
-		null
+		funcref(self, "player_control")
 	)
 
 remotesync func _post_init():
@@ -63,6 +63,23 @@ func button_initialize():
 	self._button_node.visible = true
 	self._button_node.find_node("Color").material = SpatialMaterial.new()
 	update_button_color()
+
+func player_control(delta):
+	"""
+	Because why not have the button be controllable?
+	"""
+	if not can_be_controlled():
+		return
+	if Input.is_action_pressed("ui_accept"):
+		if self.get_state() == 'Depressed':
+			self.request('Pressed')
+			return
+	else:
+		if self.get_state() == 'Pressed':
+			if get_attribute("ButtonType") in [ButtonType_Square]:
+				return
+			self.request('Depressed')
+			return
 
 """
 Button transitions
@@ -97,6 +114,8 @@ func process_press(delta):
 	Decide if we should enter the unpress state,
 	depending on our current button type.
 	"""
+	if can_be_controlled():
+		return
 	if get_attribute("ButtonType") == ButtonType_Circle:
 		for node in _level_dictionary.get_objects_at_pos(get_xpos(), get_ypos()):
 			if not node.ignores(self):
@@ -108,6 +127,8 @@ func process_press(delta):
 		self.request("Depressed")
 	
 func process_depress(delta):
+	if can_be_controlled():
+		return
 	if get_attribute("ButtonType") in [ButtonType_Circle, ButtonType_Square]:
 		for node in _level_dictionary.get_objects_at_pos(get_xpos(), get_ypos()):
 			if not node.ignores(self):

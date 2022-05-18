@@ -11,5 +11,6 @@ albedo_texture = ExtResource( 2 )
 transform = Transform( 1.05, 0, 0, 0, 0.9, 0, 0, 0, 1.05, 0, 0, 0 )
 
 [node name="peegueb" parent="." index="0"]
-blend_shapes/Key.018 = 1.0
+blend_shapes/Key.039 = 0.2
+blend_shapes/Key.040 = 0.8
 material/0 = SubResource( 1 )

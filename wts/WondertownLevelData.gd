@@ -69,6 +69,13 @@ func get_game_nodes_of_id(id) -> Array:
 			ret_list.append(game_node_data)
 	return ret_list
 
+func get_tiles_of_attribute(key, value):
+	var ret_list = []
+	for game_node_data in get_game_node_data():
+		if game_node_data.get_attributes().get("PlayerOwned") == value:
+			ret_list.append(game_node_data)
+	return ret_list
+
 """
 Container classes
 """

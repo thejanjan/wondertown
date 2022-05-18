@@ -15,7 +15,7 @@ func on_level_selected(file, path):
 	
 	# How many player instances are in file?
 	var wtl_data: WondertownLevelData = _level_io.load_file(path)
-	var player_nodes = wtl_data.get_game_nodes_of_id(GameNodeIds.GameNodeID.TestPlayer)
+	var player_nodes = wtl_data.get_tiles_of_attribute("PlayerOwned", 1)
 	
 	# Create a level data dict.
 	level_data = {
