@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://nodes/game_nodes/Player.gd" type="Script" id=1]
-[ext_resource path="res://models/game/players/wsw/stinky.tscn" type="PackedScene" id=2]
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
@@ -10,5 +9,3 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.455824, 0.89007, 0, -0.89007, 0.455824, 0, 6.57147, 3.05026 )
 fov = 75.8
 far = 1204.0
-
-[node name="WSWModel" parent="." instance=ExtResource( 2 )]

@@ -12,7 +12,7 @@ albedo_texture = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="stinky001" parent="." index="0"]
-blend_shapes/Key.001 = 1.0
+blend_shapes/Key.061 = 1.0
 material/0 = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="." index="2"]

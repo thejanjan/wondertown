@@ -5,6 +5,9 @@ var blink_duration = 7
 
 enum StinkerModel {
 	STINKY = 1
+	LOOF   = 2
+	QOOKIE = 3
+	PEEGUE = 4
 }
 
 enum StinkerEyeState {
@@ -20,10 +23,32 @@ var StinkerTextures = {
 		StinkerEyeState.DYING: preload("res://models/game/players/wsw/stinky2b.bmp"),
 		StinkerEyeState.BORED: preload("res://models/game/players/wsw/stinky2c.bmp"),
 		StinkerEyeState.BLINK: preload("res://models/game/players/wsw/stinky2d.bmp")
+	},
+	StinkerModel.LOOF: {
+		StinkerEyeState.GAMER: preload("res://models/game/players/wsw/loof.bmp"),
+		StinkerEyeState.DYING: preload("res://models/game/players/wsw/loofb.bmp"),
+		StinkerEyeState.BORED: preload("res://models/game/players/wsw/loofc.bmp"),
+		StinkerEyeState.BLINK: preload("res://models/game/players/wsw/loofd.bmp")
+	},
+	StinkerModel.QOOKIE: {
+		StinkerEyeState.GAMER: preload("res://models/game/players/wsw/qookie2a.bmp"),
+		StinkerEyeState.DYING: preload("res://models/game/players/wsw/qookie2b.bmp"),
+		StinkerEyeState.BORED: preload("res://models/game/players/wsw/qookie2c.bmp"),
+		StinkerEyeState.BLINK: preload("res://models/game/players/wsw/qookie2d.bmp")
+	},
+	StinkerModel.PEEGUE: {
+		StinkerEyeState.GAMER: preload("res://models/game/players/wsw/peegue2a.bmp"),
+		StinkerEyeState.DYING: preload("res://models/game/players/wsw/peegue2b.bmp"),
+		StinkerEyeState.BORED: preload("res://models/game/players/wsw/peegue2c.bmp"),
+		StinkerEyeState.BLINK: preload("res://models/game/players/wsw/peegue2d.bmp")
 	}
 }
-
-var anim_prefix = 'stinky_'
+var AnimPrefixes = {
+	StinkerModel.STINKY: 'stinky_',
+	StinkerModel.LOOF: 'stinky_',
+	StinkerModel.QOOKIE: 'stinky_',
+	StinkerModel.PEEGUE: 'peegue_',
+}
 
 onready var AnimPlayer = $AnimationPlayer
 var is_moving = false
@@ -55,10 +80,13 @@ func _physics_process(delta):
 	var state = StinkerEyeState.GAMER
 	handle_blink_timer()
 	
+	# set eye state
+	var __bored = get_anim_of('bored')
+	var __die   = get_anim_of('die')
 	match current_animation:
-		'stinky_bored':
+		__bored:
 			state = StinkerEyeState.BORED
-		'stinky_die':
+		__die:
 			state = StinkerEyeState.DYING
 		_:
 			# if we can blink, do it
@@ -75,12 +103,18 @@ func _physics_process(delta):
 	
 	# set animationplayer anim if necessary
 	if (current_animation != anim):
-		AnimPlayer.play(anim_prefix + anim)
+		AnimPlayer.play(get_anim_prefix() + anim)
 		current_animation = anim
 
 """
 anim handler
 """
+
+func get_anim_prefix():
+	return AnimPrefixes[stinker_model]
+
+func get_anim_of(name):
+	return name + get_anim_prefix()
 
 """
 face handler

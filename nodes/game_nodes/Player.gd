@@ -6,11 +6,17 @@ func get_game_node_id():
 
 # Player properties.
 var movement_delay = 12;
-
+var WSWModel = null;
 
 # do not touch these
-onready var WSWModel = $WSWModel
 var movement_debounce = 0;
+
+var PlayerModels = {
+	'WSWStinky': preload("res://models/game/players/wsw/stinky.tscn"),
+	'WSWLoof':   preload("res://models/game/players/wsw/loof.tscn"),
+	'WSWQookie': preload("res://models/game/players/wsw/qookie.tscn"),
+	'WSWPeegue': preload("res://models/game/players/wsw/peegue.tscn")
+}
 
 var key_map = {
 	KEY_LEFT: [-1, 0],
@@ -24,6 +30,7 @@ var player_angle = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Initiate states.
+	set_attribute_function('Player', funcref(self, 'create_model'))
 	self.add_state(
 		"Play",
 		null,
@@ -45,6 +52,8 @@ func _do_translate(delta):
 		(1.0 / self.movement_delay) * (delta / (1.0 / 60.0))
 	);
 	
+	if not WSWModel:
+		return
 	if self.translation != goal_vec:
 		WSWModel.rotation_degrees = Vector3(0, player_angle, 0)
 		WSWModel.set_moving_state(true)
@@ -79,3 +88,11 @@ func on_lose_master():
 
 func on_receive_master():
 	$Camera.make_current()
+
+"""
+Player Model creation
+"""
+
+func create_model(name):
+	WSWModel = PlayerModels[name].instance()
+	add_child(WSWModel)
