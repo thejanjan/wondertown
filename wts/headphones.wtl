@@ -1,4 +1,7 @@
 {
+	"header": {
+		"filetype": "LV6",
+	},
 	"game_nodes": [
 		{
 			"id": 1,

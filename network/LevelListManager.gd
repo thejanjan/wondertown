@@ -5,6 +5,8 @@ signal level_selected
 onready var itemList = get_parent().find_node("ItemList")
 var wtl_files = []
 
+var valid_filetypes = ['wtl', 'LV6']
+
 func _ready():
 	reload_files()
 
@@ -33,8 +35,10 @@ func find_all_wtl_files():
 	var retlist = []
 	for file_data in normal_files_in_directory:
 		var filename = file_data[0]
-		if filename.ends_with('.wtl'):
-			retlist.append(file_data)
+		for filetype in valid_filetypes:
+			if filename.ends_with('.' + filetype):
+				retlist.append(file_data)
+				break
 	return retlist
 
 	
