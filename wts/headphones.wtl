@@ -2,22 +2,22 @@
 	"game_nodes": [
 		{
 			"id": 1,
-			"attributes": {"Player": "WSWStinky"},
+			"attributes": {"Player": 1, "PlayerOwned": 1},
 			"positions": [[3, 7]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": "WSWLoof"},
+			"attributes": {"Player": 2, "PlayerOwned": 1},
 			"positions": [[2, 6]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": "WSWQookie"},
+			"attributes": {"Player": 3, "PlayerOwned": 1},
 			"positions": [[3, 6]]
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": "WSWPeegue"},
+			"attributes": {"Player": 4, "PlayerOwned": 1},
 			"positions": [[2, 7]]
 		},
 		{

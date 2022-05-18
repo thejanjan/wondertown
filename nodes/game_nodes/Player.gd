@@ -10,13 +10,7 @@ var WSWModel = null;
 
 # do not touch these
 var movement_debounce = 0;
-
-var PlayerModels = {
-	'WSWStinky': preload("res://models/game/players/wsw/stinky.tscn"),
-	'WSWLoof':   preload("res://models/game/players/wsw/loof.tscn"),
-	'WSWQookie': preload("res://models/game/players/wsw/qookie.tscn"),
-	'WSWPeegue': preload("res://models/game/players/wsw/peegue.tscn")
-}
+var PlayerModelScene = preload("res://models/game/players/wsw/WSWPlayer.tscn")
 
 var key_map = {
 	KEY_LEFT: [-1, 0],
@@ -62,7 +56,7 @@ func _do_translate(delta):
 
 func _attempt_movement(delta):
 	# Attempts to move this object a certain way.
-	if not is_network_master():
+	if not can_be_controlled():
 		return
 	
 	if self.movement_debounce > 0:
@@ -83,16 +77,11 @@ func _attempt_movement(delta):
 				WSWModel.set_moving_state(true)
 				return;
 
-func on_lose_master():
-	$Camera.clear_current()
-
-func on_receive_master():
-	$Camera.make_current()
-
 """
 Player Model creation
 """
 
 func create_model(name):
-	WSWModel = PlayerModels[name].instance()
+	WSWModel = PlayerModelScene.instance()
+	WSWModel.set_stinker_name(name)
 	add_child(WSWModel)

@@ -49,7 +49,12 @@ func set_network_masters():
 	"""
 	Set the network masters for all player nodes.
 	"""
-	var player_nodes = _level_dictionary._object_id_dict.get(GameNodeIds.GameNodeID.TestPlayer, [])
+	var player_nodes = _level_dictionary.get_tiles_of_attribute("PlayerOwned", 1)
 	
+	for node in player_nodes:
+		node.set_attribute("PlayerOwned", 0)
 	for i in range(min(len(player_nodes), len(_player_ids))):
-		player_nodes[i].give_control_to(_player_ids[i])
+		var node = player_nodes[i]
+		var player_id = _player_ids[i]
+		node.give_control_to(player_id)
+		node.set_attribute("PlayerOwned", 1)

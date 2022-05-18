@@ -26,6 +26,9 @@ var _level_dictionary = null
 var external_attributes = {}
 var external_attribute_function_hooks = {}
 
+# Preloaded refs.
+var PlayerCamera = preload("res://nodes/game_nodes/PlayerCamera.tscn")
+
 """
 Godot node methods
 """
@@ -40,6 +43,8 @@ func _ready():
 	set_attribute("ProcessActive", 1)
 	set_attribute("PhysicsActive", 1)
 	set_attribute("GameIDIgnore", [])
+	
+	set_attribute("PlayerOwned", 0)
 	
 	# Private GameNode attributes
 	set_attribute("TileLogicOverride", [])
@@ -85,9 +90,11 @@ remotesync func _receive_control(peer_id):
 	"""Master tells us who this node is now controled by."""
 	if is_network_master():
 		on_lose_master()
+		_lose_camera()
 	self.set_network_master(peer_id)
 	if is_network_master():
 		on_receive_master()
+		_earn_camera()
 
 func on_lose_master():
 	"""Called on the master of this node when the master is lost."""
@@ -96,6 +103,25 @@ func on_lose_master():
 func on_receive_master():
 	"""Called on the master of this node when the master is gained."""
 	pass
+
+func _lose_camera():
+	var node = find_node("PlayerCamera", false)
+	if node != null:
+		null.queue_free()
+	
+func _earn_camera():
+	if get_viewport().get_camera():
+		return
+	var node = find_node("PlayerCamera", false)
+	if node == null:
+		var cam = PlayerCamera.instance()
+		var t = cam.translation
+		add_child(cam)
+		cam.translation = t
+		# cam.make_current()
+
+func can_be_controlled():
+	return is_network_master() and get_attribute("PlayerOwned")
 
 """
 External attributes

@@ -128,3 +128,13 @@ func get_tile_logic_at_pos(xpos, ypos):
 	if not _tile_position_dict[xpos].get(ypos):
 		return TileEnums.TileLogic.None
 	return _tile_position_dict[xpos][ypos].get_logic()
+
+func get_tiles_of_attribute(key, value):
+	"""
+	Finds all nodes of a given attribute.
+	"""
+	var ret_list = []
+	for node in _all_objects:
+		if node.get_attribute(key) == value:
+			ret_list.append(node)
+	return ret_list

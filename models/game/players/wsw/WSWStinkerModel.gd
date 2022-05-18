@@ -10,11 +10,25 @@ enum StinkerModel {
 	PEEGUE = 4
 }
 
+var __IHateGodotEnums = {
+	1: StinkerModel.STINKY,
+	2: StinkerModel.LOOF,
+	3: StinkerModel.QOOKIE,
+	4: StinkerModel.PEEGUE,
+}
+
 enum StinkerEyeState {
 	GAMER = 1
 	DYING = 2
 	BORED = 3
 	BLINK = 4
+}
+
+var PlayerModels = {
+	StinkerModel.STINKY: load("res://models/game/players/wsw/stinky.tscn"),
+	StinkerModel.LOOF:   load("res://models/game/players/wsw/loof.tscn"),
+	StinkerModel.QOOKIE: load("res://models/game/players/wsw/qookie.tscn"),
+	StinkerModel.PEEGUE: load("res://models/game/players/wsw/peegue.tscn")
 }
 
 var StinkerTextures = {
@@ -50,28 +64,33 @@ var AnimPrefixes = {
 	StinkerModel.PEEGUE: 'peegue_',
 }
 
-onready var AnimPlayer = $AnimationPlayer
+var AnimPlayer = null
 var is_moving = false
 var stinker_mesh = null
 var stinker_model = null
 var stinker_eye_texture = null
 var current_animation = 'zero'
 var _blink_timer = 0
+var stinker_name = null
+
+func set_stinker_name(name):
+	stinker_name = name
 
 func _ready():
+	# get the stinker model from the name
+	stinker_model = __IHateGodotEnums.get(int(stinker_name))
+	assert(stinker_model)
+	
+	# instance it
+	var model_scene = PlayerModels[stinker_model].instance()
+	add_child(model_scene)
+	
 	# find the stinker mesh
-	for child in get_children():
+	for child in model_scene.get_children():
 		if child is MeshInstance:
 			stinker_mesh = child
-	
-	# determine what model we are
-	var material = stinker_mesh.get_surface_material(0)
-	var curr_tex = material.albedo_texture
-	for stinker_model in StinkerTextures:
-		if StinkerTextures[stinker_model][StinkerEyeState.GAMER] == curr_tex:
-			self.stinker_model = stinker_model
-			break
-	assert(stinker_model)
+		elif child is AnimationPlayer:
+			AnimPlayer = child
 
 func _physics_process(delta):
 	"""
