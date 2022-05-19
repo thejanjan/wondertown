@@ -89,8 +89,8 @@ func process_close(delta):
 
 func get_my_tile_logic(questioning_node):
 	if self.translation == get_goal_pos():
-		return TileEnums.TileLogic.Wall
-	return null
+		return null
+	return TileEnums.TileLogic.Wall
 
 """
 Gate visual state

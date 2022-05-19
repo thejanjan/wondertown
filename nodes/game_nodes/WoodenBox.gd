@@ -1,5 +1,8 @@
 extends GameNode
 
+var movement_debounce = 1
+var player_node = null
+
 # Node settings.
 func get_game_node_id():
 	return GameNodeIds.GameNodeID.WoodenBox
@@ -8,25 +11,39 @@ func get_game_node_id():
 func _ready():
 	# Initiate states.
 	self.add_state(
-		"Play",
+		"Still",
+		funcref(self, "set_player_node"),
 		null,
-		null,
-		funcref(self, "_do_translate"),
+		funcref(self, "_ensure_position"),
 		funcref(self, "_attempt_movement")
 	)
+	self.add_state(
+		"PushedByPlayer",
+		funcref(self, "set_player_node"),
+		null,
+		funcref(self, "_do_translate_player"),
+		funcref(self, "_attempt_movement")
+	)
+	network_state("Still")
+	network_state("PushedByPlayer")
 
 remotesync func _post_init():
 	# Go through states.
-	self.request("Play")
+	self.request("Still")
 
+func _ensure_position(_delta):
+	self.translation = self.get_pos_as_vector()
 
-func _do_translate(delta):
+func _do_translate_player(delta):
 	# If we are moving, do the translation action.
 	var goal_vec = self.get_pos_as_vector()
 	self.translation = self.translation.move_toward(
 		goal_vec,
-		delta
+		(1.0 / 12.0) * (delta / (1.0 / 60.0))
 	);
+	self.movement_debounce = 5
+	if self.translation == goal_vec:
+		self.request("Still")
 
 func _attempt_movement(delta):
 	# Attempts to move this object a certain way.
@@ -63,6 +80,7 @@ func get_my_tile_logic(questioning_node):
 			if self.check_tile_logic(xpos, ypos) == TileEnums.TileLogic.Floor:
 				# The player is allowed to move us.
 				self.move_pos(xpos, ypos)
+				self.request('PushedByPlayer', [], [questioning_node.get_name()])
 				return TileEnums.TileLogic.Floor
 	
 	# If all else fails, we pretend to be a wall.
@@ -74,3 +92,18 @@ func on_gamenode_enter_us(node, id, from: Vector2, to: Vector2):
 	enters the position that we are standing on.
 	"""
 	pass
+
+func set_player_node(node=null):
+	"""
+	Sets the pushing state of the player node pushing us.
+	"""
+	if node is String:
+		node = get_parent().find_node(node, false, false)
+	if node == player_node:
+		return
+	if player_node:
+		player_node.set_attribute('__Pushing', 0)
+		player_node = null
+	if node:
+		player_node = node
+		player_node.set_attribute('__Pushing', 1)

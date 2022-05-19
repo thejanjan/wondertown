@@ -10,7 +10,7 @@
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": 2},
+			"attributes": {"Player": 2, "PlayerOwned": 1},
 			"positions": [[2, 6]]
 		},
 		{
@@ -20,12 +20,12 @@
 		},
 		{
 			"id": 1,
-			"attributes": {"Player": 4},
+			"attributes": {"Player": 4, "PlayerOwned": 1},
 			"positions": [[2, 7]]
 		},
 		{
 			"id": 2,
-			"attributes": {"PlayerOwned": 1},
+			"attributes": {},
 			"positions": [[4, 4]]
 		},
 		{

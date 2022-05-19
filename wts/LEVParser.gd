@@ -82,6 +82,11 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("Player", int32)
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+			
+			# for test, spawn a loof here too
+			if int32 == 1:
+				make_game_node_from_int32(wld, 2, pos)
+			
 		3:  # Wood Box
 			data.set_id(int(GameNodeIds.GameNodeID.WoodenBox))
 		4:  # Steel Box

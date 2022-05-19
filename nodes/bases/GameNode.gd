@@ -54,6 +54,9 @@ func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	_level_manager = level_manager_ref
 	_level_dictionary = level_dictionary_ref
 	
+	# Set name of node
+	set_name(str(set_id) + '-' + str(get_game_node_id()))
+	
 	# Post init now.
 	# Do as RPC to avoid race conditions with attributes
 	rpc("_post_init")
@@ -259,6 +262,7 @@ FSM pattern
 
 var _current_state = "Off"
 var _transition_state = null
+var networked_states = []
 var state_list = {
 	"Off": [funcref(self, "_cleanup"), null, null, null]
 }
@@ -271,11 +275,21 @@ func add_state(state_name, enter_func=null, exit_func=null, process_func=null, p
 	
 	state_list[state_name] = [enter_func, exit_func, process_func, physics_process_func]
 
+func network_state(state_name):
+	"""
+	Sets a state to be network'd.
+	"""
+	networked_states.append(state_name)
 
-func request(state_name, exit_args=[], enter_args=[]):
+func request(state_name, exit_args=[], enter_args=[], network=false):
 	"""
 	Requests a state to enter.
 	"""
+	# If we're networking, avoid race conditions 
+	if network:
+		if _current_state == state_name:
+			return
+	
 	# Are we already in a state transition?
 	if (_transition_state != null):
 		push_error("GameNode attempted to request state mid-transition.")
@@ -297,7 +311,13 @@ func request(state_name, exit_args=[], enter_args=[]):
 	# Reset our transition state.
 	_transition_state = null
 	_current_state = state_name
+	
+	if not network and state_name in networked_states:
+		# Network this state change.
+		rpc("network_request", state_name, exit_args, enter_args)
 
+remotesync func network_request(state_name, exit_args, enter_args):
+	request(state_name, exit_args, enter_args, true)
 
 func get_state():
 	"""

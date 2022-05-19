@@ -26,6 +26,7 @@ func _ready():
 	# Initiate states.
 	set_attribute_function('Player', funcref(self, 'create_model'))
 	set_attribute("__MovingTo", [0, 0])
+	set_attribute("__Pushing", 0)
 	self.add_state(
 		"Play",
 		null,
@@ -49,7 +50,9 @@ func _do_translate(delta):
 	
 	if not WSWModel:
 		return
+	WSWModel.set_pushing_state(get_attribute('__Pushing'))
 	if self.translation != goal_vec:
+		calc_player_angle()
 		WSWModel.rotation_degrees = Vector3(0, player_angle, 0)
 		WSWModel.set_moving_state(true)
 	else:
@@ -78,6 +81,27 @@ func _attempt_movement(delta):
 				player_angle = (3 - (key - KEY_LEFT)) * 90
 				WSWModel.set_moving_state(true)
 				return;
+
+func calc_player_angle():
+	var goal_vec = self.get_pos_as_vector()
+	if self.translation == goal_vec:
+		return
+	else:
+		# set the player angle based on our offset
+		var xdiff = abs(self.translation.x - goal_vec.x)
+		var zdiff = abs(self.translation.z - goal_vec.z)
+		if self.translation.x > goal_vec.x and xdiff > 0.2:
+			# moving left
+			player_angle = 270
+		elif self.translation.x < goal_vec.x and xdiff > 0.2:
+			# moving right
+			player_angle = 90
+		elif self.translation.z > goal_vec.z and zdiff > 0.2:
+			# moving up
+			player_angle = 180
+		elif self.translation.z < goal_vec.z and zdiff > 0.2:
+			# moving down
+			player_angle = 0
 
 """
 Player Model creation

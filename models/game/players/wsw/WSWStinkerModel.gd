@@ -66,6 +66,7 @@ var AnimPrefixes = {
 
 var AnimPlayer = null
 var is_moving = false
+var is_pushing = false
 var stinker_mesh = null
 var stinker_model = null
 var stinker_eye_texture = null
@@ -124,6 +125,8 @@ func _physics_process(delta):
 	var anim = 'idle'
 	if is_moving:
 		anim = 'walk'
+		if is_pushing:
+			anim = 'push'
 	
 	# set animationplayer anim if necessary
 	if (current_animation != anim):
@@ -163,6 +166,9 @@ external read
 
 func set_moving_state(mode):
 	is_moving = mode
+
+func set_pushing_state(mode):
+	is_pushing = mode
 
 func _on_AnimationPlayer_animation_started(anim_name):
 	current_animation = anim_name
