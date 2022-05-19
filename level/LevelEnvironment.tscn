@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://level/LevelEnvironment.gd" type="Script" id=1]
-[ext_resource path="res://textures/skies/city.jpg" type="Texture" id=2]
+[ext_resource path="res://textures/skies/sky1.jpg" type="Texture" id=2]
 [ext_resource path="res://models/sky/SkyTexturePlane.gd" type="Script" id=3]
 
 [sub_resource type="Environment" id=1]

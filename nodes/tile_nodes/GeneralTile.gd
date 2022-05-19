@@ -21,6 +21,8 @@ func _post_init(data):
 	"""
 	tex_nodes = [Top, Bottom, Front, Back, Left, Right]
 	set_texture_array(data.get_tex())
+	
+	handle_visual_placements(data, data.get_visual())
 
 func set_texture_array(tex_array: Array):
 	for i in range(len(tex_nodes)):
@@ -30,7 +32,18 @@ func set_texture_array(tex_array: Array):
 		# What texture do we wanna load?
 		var file_name = tex_array[i]
 		
-		# Set texture.
-		var tex = TileEnums.load_with_cache(file_name)
-		node.set_material(self.material.duplicate())
-		node.material.set_texture(0, tex)
+		if file_name == '':
+			# This node is hidden.
+			node.hide()
+		else:
+			# Set texture.
+			var tex = TileEnums.load_with_cache(file_name)
+			node.set_material(self.material.duplicate())
+			node.material.set_texture(0, tex)
+
+func handle_visual_placements(data, visual_id):
+	"""
+	Places this node visually.
+	"""
+	if visual_id == 1:
+		translate(Vector3(0, 1, 0))

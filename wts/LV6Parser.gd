@@ -4,6 +4,19 @@ const WondertownLevelData = preload("WondertownLevelData.gd")
 var custom_assets = ['houses', 'models', 'textures', 'background']
 var cached_sign_load = {}
 
+var LevelStyleData = {
+	2: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	}
+}
+var level_style = 2
+
 """
 Reads LV6 files.
 """
@@ -33,7 +46,7 @@ func make_wld(file: File):
 	
 	# More specific level data.
 	var time_limit = file.get_32()
-	var level_style = file.get_32()
+	level_style = file.get_32()
 	var level_background = file.get_32()
 	var width = file.get_32()
 	var height = file.get_32()
@@ -127,12 +140,19 @@ func make_tile_node_from_int32(wld, int32, pos):
 		### Player Characters ###
 		100, 101, 102, 103:
 			data.set_properties(0, 0)
-			data.set_tex(["grass_top", "dirt", "grass_side", "grass_side", "grass_side", "grass_side"])
+			data.set_tex([LevelStyleData[level_style]['floor_tex'][int32 - 100], '', '', '', '', ''])
+		### Walls ###
+		200, 201, 202, 203:
+			data.set_properties(1, 1)
+			data.set_tex(LevelStyleData[level_style]['wall_tex'])
+		1500, 1501, 1502:
+			data.set_properties(1, 1)
+			data.set_tex(LevelStyleData[level_style]['fake_wall_tex'])
 		### Signs ###
 		1300, 1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310, 1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1310:
 			# Implies normal ground
 			data.set_properties(0, 0)
-			data.set_tex(["grass_top", "dirt", "grass_side", "grass_side", "grass_side", "grass_side"])
+			data.set_tex([LevelStyleData[level_style]['floor_tex'][0], '', '', '', '', ''])
 			# Also, add sign gamenode
 			cached_sign_load[int32 - 1300] = pos
 		### Undefined ###
