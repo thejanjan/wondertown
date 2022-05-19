@@ -38,13 +38,13 @@ func make_wld(file: File):
 	var height = file.get_32()
 	
 	# Load tile data.
-	for x in range(width):
-		for y in range(height):
+	for y in range(height):
+		for x in range(width):
 			make_tile_node_from_int32(data, file.get_32(), Vector2(x, y))
 	
 	# Load object data.
-	for x in range(width):
-		for y in range(height):
+	for y in range(height):
+		for x in range(width):
 			make_game_node_from_int32(data, file.get_32(), Vector2(x, y))
 	
 	# Load signs.

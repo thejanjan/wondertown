@@ -1,12 +1,12 @@
 extends "res://wts/LV6Parser.gd"
 
 """
-Reads LV5 files.
+Reads LEV files.
 """
 
 func make_wld(file: File):
 	"""
-	Makes a WonderlandLevelData from this LV5 filestream.
+	Makes a WonderlandLevelData from this LEV filestream.
 	"""
 	var data = WondertownLevelData.new({})
 	
@@ -17,12 +17,7 @@ func make_wld(file: File):
 	# Read through the header.
 	var format_name = read_file_string(file)
 	var filename = read_file_string(file)
-	var level_version = file.get_32()
 	var level_name = read_file_string(file)
-	
-	# unknowns
-	file.get_64()
-	file.get_64()
 	
 	# More specific level data.
 	var time_limit = file.get_32()
@@ -54,7 +49,7 @@ func make_wld(file: File):
 	"""
 	
 	data.set_header({
-		"filetype": "LV6",
+		"filetype": "LEV",
 		"level_name": level_name,
 		"time": time_limit,
 		"style": level_style,
@@ -66,3 +61,54 @@ func make_wld(file: File):
 	# Our data is populated, lets goo
 	data.update_dict()
 	return data
+
+"""
+Game Node Read
+"""
+
+func make_game_node_from_int32(wld, int32, pos):
+	# Makes GameNodeData and asks to put it
+	# into the data dictionary.
+	var data = WondertownLevelData.GameNodeData.new({})
+	
+	# The big data populator
+	match int32:
+		### Player Characters ###
+		1, 2:
+			data.set_attribute("Player", int32)
+			data.set_attribute("PlayerOwned", 1)
+			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+		3:  # Wood Box
+			return
+		4:  # Steel Box
+			return
+		5:  # Exit
+			return
+		6:  # Rainbow Coin
+			return
+		7:  # Coily
+			return
+		8, 9, 10, 11, 12, 13, 14, 15:
+			# Various ZBot flavors.
+			return
+		16, 17, 18, 19, 20, 21, 22, 23:
+			# Various Kaboom flavors.
+			return
+		25: # Bonus Coin
+			return
+		26: # FISH
+			return
+		27: # Snow weather
+			return
+		28: # Pillar
+			return
+		29: # Fat spike
+			return
+		30: # Thin spike
+			return
+		### Undefined ###
+		_:
+			return
+	
+	# Add this data into the wld.
+	wld.add_game_node(data, pos)

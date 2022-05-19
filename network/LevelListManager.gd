@@ -5,7 +5,7 @@ signal level_selected
 onready var itemList = get_parent().find_node("ItemList")
 var wtl_files = []
 
-var valid_filetypes = ['wtl', 'LV6', 'lv5']
+var valid_filetypes = ['wtl', 'LV6', 'lv5', 'lev']
 
 func _ready():
 	reload_files()
