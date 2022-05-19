@@ -2,6 +2,7 @@ extends Node
 
 const WondertownLevelData = preload("WondertownLevelData.gd")
 var custom_assets = ['houses', 'models', 'textures', 'background']
+var cached_sign_load = {}
 
 """
 Reads LV6 files.
@@ -51,6 +52,10 @@ func make_wld(file: File):
 	var sign_strings = []
 	for i in range(20):
 		sign_strings.append(read_file_string(file))
+		
+		# Do we need to load a sign for this?
+		if i in cached_sign_load:
+			make_game_node_from_int32(data, ['Sign', sign_strings[i]], cached_sign_load[i])
 	
 	# And music variable, at the end.
 	var music_id = file.get_32()
@@ -97,6 +102,10 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("Player", int32)
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+		### Sign ###
+		['Sign', ..]:
+			data.set_attribute("Dialogue", int32[1])
+			data.set_id(int(GameNodeIds.GameNodeID.Sign))
 		### Undefined ###
 		_:
 			return
@@ -119,6 +128,13 @@ func make_tile_node_from_int32(wld, int32, pos):
 		100, 101, 102, 103:
 			data.set_properties(0, 0)
 			data.set_tex(["grass_top", "dirt", "grass_side", "grass_side", "grass_side", "grass_side"])
+		### Signs ###
+		1300, 1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310, 1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1310:
+			# Implies normal ground
+			data.set_properties(0, 0)
+			data.set_tex(["grass_top", "dirt", "grass_side", "grass_side", "grass_side", "grass_side"])
+			# Also, add sign gamenode
+			cached_sign_load[int32 - 1300] = pos
 		### Undefined ###
 		_:
 			return

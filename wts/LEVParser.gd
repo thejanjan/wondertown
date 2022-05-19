@@ -40,6 +40,10 @@ func make_wld(file: File):
 	var sign_strings = []
 	for i in range(20):
 		sign_strings.append(read_file_string(file))
+		
+		# Do we need to load a sign for this?
+		if i in cached_sign_load:
+			make_game_node_from_int32(data, ['Sign', sign_strings[i]], cached_sign_load[i])
 	
 	# And music variable, at the end.
 	var music_id = file.get_32()
@@ -108,6 +112,8 @@ func make_game_node_from_int32(wld, int32, pos):
 			return
 		### Undefined ###
 		_:
+			# Maybe our parent has something.
+			.make_game_node_from_int32(wld, int32, pos)
 			return
 	
 	# Add this data into the wld.
