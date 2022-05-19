@@ -108,7 +108,7 @@ func get_objects_at_pos(xpos, ypos):
 		return []
 	return _object_position_dict[xpos][ypos]
 	
-func get_tile_logic_at_pos(xpos, ypos):
+func get_tile_logic_at_pos(questioning_node, xpos, ypos):
 	"""
 	Returns the tile logic at a given position.
 	"""
@@ -117,10 +117,10 @@ func get_tile_logic_at_pos(xpos, ypos):
 	
 	# First, decide if we have an object at this pos with a logic override.
 	for node in get_objects_at_pos(xpos, ypos):
-		var logic_override_list = node.get_attribute("TileLogicOverride")
-		if logic_override_list:
+		var override_logic = node.get_my_tile_logic(questioning_node)
+		if override_logic != null:
 			# First one wins
-			return logic_override_list[0]
+			return override_logic
 	
 	# If not, just grab the tile's logic.
 	if not _tile_position_dict.get(xpos):

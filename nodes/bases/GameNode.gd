@@ -45,9 +45,6 @@ func _ready():
 	set_attribute("GameIDIgnore", [])
 	
 	set_attribute("PlayerOwned", 0)
-	
-	# Private GameNode attributes
-	set_attribute("TileLogicOverride", [])
 
 func initialize(set_id, level_manager_ref, level_dictionary_ref):
 	"""
@@ -194,6 +191,14 @@ func attr_equal(attr, node_a, node_b=null):
 	if node_b == null:
 		node_b = self
 	return node_a.get_attribute(attr) == node_b.get_attribute(attr)
+	
+func get_my_tile_logic(questioning_node):
+	"""
+	Does this game node have an override for the tile logic?
+	If so, get it. If not, return null.
+	Can be overriden by subclasses.
+	"""
+	return null
 
 """
 Position methods
@@ -212,6 +217,10 @@ func set_gamenode_pos(xpos, ypos, translate=false):
 		self.translate(Vector3(xpos, 0, ypos))
 
 	# Tell all other gamenodes at this position that we're here now.
+	if not _level_dictionary:
+		# the object is still being initialized, don't check this
+		return
+	
 	for gamenode in _level_dictionary.get_objects_at_pos(xpos, ypos):
 		if gamenode == self:
 			continue
@@ -360,7 +369,7 @@ func check_tile_logic(xpos, ypos, relative=true):
 	Checks the tile logic at a given position.
 	"""
 	if not relative:
-		return _level_dictionary.get_tile_logic_at_pos(xpos, ypos)
+		return _level_dictionary.get_tile_logic_at_pos(self, xpos, ypos)
 	else:
-		return _level_dictionary.get_tile_logic_at_pos(get_xpos() + xpos, get_ypos() + ypos)
+		return _level_dictionary.get_tile_logic_at_pos(self, get_xpos() + xpos, get_ypos() + ypos)
 		

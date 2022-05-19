@@ -115,6 +115,9 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("Player", int32)
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+		### Boxes ###
+		9:  # Wooden Box
+			data.set_id(int(GameNodeIds.GameNodeID.WoodenBox))
 		### Sign ###
 		['Sign', ..]:
 			data.set_attribute("Dialogue", int32[1])

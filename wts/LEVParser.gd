@@ -83,7 +83,7 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
 		3:  # Wood Box
-			return
+			data.set_id(int(GameNodeIds.GameNodeID.WoodenBox))
 		4:  # Steel Box
 			return
 		5:  # Exit

@@ -25,6 +25,7 @@ var player_angle = 0
 func _ready():
 	# Initiate states.
 	set_attribute_function('Player', funcref(self, 'create_model'))
+	set_attribute("__MovingTo", [0, 0])
 	self.add_state(
 		"Play",
 		null,
@@ -70,6 +71,7 @@ func _attempt_movement(delta):
 		if Input.is_key_pressed(key):
 			var xpos = vec[0]
 			var ypos = vec[1]
+			set_attribute("__MovingTo", [xpos, ypos])
 			if self.check_tile_logic(xpos, ypos) == TileEnums.TileLogic.Floor:
 				self.move_pos(xpos, ypos)
 				self.movement_debounce = self.movement_delay - 1;

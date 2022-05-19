@@ -66,16 +66,16 @@ func button_activation(mode):
 Gate process variables
 """
 
+func get_goal_pos():
+	return self.get_pos_as_vector() + Vector3(0, -1.2, 0)
+
 func process_open(delta):
 	"""
 	Move to the Open position.
 	"""
-	var goal_pos = self.get_pos_as_vector() + Vector3(0, -1.2, 0)
 	self.translation = self.translation.move_toward(
-		goal_pos, delta * get_attribute("OpenSpeed")
+		get_goal_pos(), delta * get_attribute("OpenSpeed")
 	);
-	if self.translation == goal_pos:
-		set_attribute("TileLogicOverride", [])
 	
 func process_close(delta):
 	"""
@@ -86,6 +86,11 @@ func process_close(delta):
 		goal_pos, delta * get_attribute("CloseSpeed")
 	);
 	set_attribute("TileLogicOverride", [TileEnums.TileLogic.Wall])
+
+func get_my_tile_logic(questioning_node):
+	if self.translation == get_goal_pos():
+		return TileEnums.TileLogic.Wall
+	return null
 
 """
 Gate visual state
