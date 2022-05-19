@@ -7,12 +7,14 @@ An I/O class for managing input and output of Wondertown level files (WTLs).
 
 const WondertownLevelData = preload("WondertownLevelData.gd")
 const LV6Parser = preload("LV6Parser.gd")
+const LV5Parser = preload("LV5Parser.gd")
 var parsers = {}
 
 func load_parsers():
 	if not parsers:
 		parsers = {
-			'LV6': LV6Parser.new()
+			'LV6': LV6Parser.new(),
+			'lv5': LV5Parser.new()
 		}
 
 func load_file(filename):
