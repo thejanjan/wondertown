@@ -203,11 +203,34 @@ func set_gamenode_pos(xpos, ypos, translate=false):
 	"""
 	Sets the gamenode's position.
 	"""
+	var from = Vector2(get_attribute("xpos"), get_attribute("ypos"))
+	var to = Vector2(xpos, ypos)
+	
 	set_attribute("xpos", xpos)
 	set_attribute("ypos", ypos)
 	if translate:
 		self.translate(Vector3(xpos, 0, ypos))
 
+	# Tell all other gamenodes at this position that we're here now.
+	for gamenode in _level_dictionary.get_objects_at_pos(xpos, ypos):
+		if gamenode == self:
+			continue
+		else:
+			# This node will know that we have Arrived.
+			gamenode.on_gamenode_enter_us(self, get_game_node_id(), from, to)
+
+func can_gamenode_enter_us(node, id, from: Vector2):
+	"""
+	Should an incoming game node be allowed to enter us?
+	"""
+	return true
+
+func on_gamenode_enter_us(node, id, from: Vector2, to: Vector2):
+	"""
+	This method is called whenever any gamenode
+	enters the position that we are standing on.
+	"""
+	pass
 
 func move_pos(xpos_diff, ypos_diff, translate=false):
 	set_gamenode_pos(get_xpos() + xpos_diff, get_ypos() + ypos_diff, translate)

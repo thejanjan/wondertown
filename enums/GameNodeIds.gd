@@ -10,6 +10,7 @@ enum GameNodeID {
 	GeneralButton = 2
 	Gate = 3
 	Sign = 4
+	WoodenBox = 5
 }
 
 
@@ -18,6 +19,7 @@ const GameNodeIDInstances = {
 	GameNodeID.GeneralButton: preload("res://nodes/game_nodes/Button.tscn"),
 	GameNodeID.Gate: preload("res://nodes/game_nodes/Gate.tscn"),
 	GameNodeID.Sign: preload("res://nodes/game_nodes/Sign.tscn"),
+	GameNodeID.WoodenBox: preload("res://nodes/game_nodes/WoodenBox.tscn"),
 }
 
 
