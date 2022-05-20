@@ -196,6 +196,11 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("Player", int32)
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+		### Coins! ###
+		5:
+			data.set_id(int(GameNodeIds.GameNodeID.WSWRainbowCoin))
+		8:
+			data.set_id(int(GameNodeIds.GameNodeID.WSWBonusCoin))
 		### Exit ###
 		6:
 			data.set_id(int(GameNodeIds.GameNodeID.WSWExit))

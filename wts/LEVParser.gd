@@ -94,7 +94,7 @@ func make_game_node_from_int32(wld, int32, pos):
 		5:  # Exit
 			data.set_id(int(GameNodeIds.GameNodeID.WSWExit))
 		6:  # Rainbow Coin
-			return
+			data.set_id(int(GameNodeIds.GameNodeID.WSWRainbowCoin))
 		7:  # Coily
 			return
 		8, 9, 10, 11, 12, 13, 14, 15:
@@ -104,7 +104,7 @@ func make_game_node_from_int32(wld, int32, pos):
 			# Various Kaboom flavors.
 			return
 		25: # Bonus Coin
-			return
+			data.set_id(int(GameNodeIds.GameNodeID.WSWBonusCoin))
 		26: # FISH
 			return
 		27: # Snow weather

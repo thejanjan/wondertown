@@ -12,6 +12,8 @@ enum GameNodeID {
 	Sign = 4
 	WoodenBox = 5
 	WSWExit = 6
+	WSWRainbowCoin = 7
+	WSWBonusCoin = 8
 }
 
 
@@ -22,6 +24,8 @@ const GameNodeIDInstances = {
 	GameNodeID.Sign: preload("res://nodes/game_nodes/Sign.tscn"),
 	GameNodeID.WoodenBox: preload("res://nodes/game_nodes/WoodenBox.tscn"),
 	GameNodeID.WSWExit: preload("res://nodes/game_nodes/WSWExit.tscn"),
+	GameNodeID.WSWRainbowCoin: preload("res://nodes/game_nodes/WSWRainbowCoin.tscn"),
+	GameNodeID.WSWBonusCoin: preload("res://nodes/game_nodes/WSWBonusCoin.tscn"),
 }
 
 

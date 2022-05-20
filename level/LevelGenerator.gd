@@ -74,7 +74,7 @@ func build_level():
 	# Add game GUI.
 	var gui = WSWGUI.instance()
 	add_child(gui)
-	gui.set_level_dict(WSWGUI)
+	gui.set_level_dict(get_level_dictionary())
 
 func _build_game_nodes():
 	"""

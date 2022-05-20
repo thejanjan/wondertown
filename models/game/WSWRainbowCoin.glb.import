@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/WSWCoin.glb-5755a7e55749fc7f7ec33434921d7a95.scn"
+path="res://.import/WSWRainbowCoin.glb-24f8637318ce7f0af37bd96a920d2b30.scn"
 
 [deps]
 
-source_file="res://models/game/WSWCoin.glb"
-dest_files=[ "res://.import/WSWCoin.glb-5755a7e55749fc7f7ec33434921d7a95.scn" ]
+source_file="res://models/game/WSWRainbowCoin.glb"
+dest_files=[ "res://.import/WSWRainbowCoin.glb-24f8637318ce7f0af37bd96a920d2b30.scn" ]
 
 [params]
 
