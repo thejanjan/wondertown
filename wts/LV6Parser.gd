@@ -5,6 +5,24 @@ var custom_assets = ['houses', 'models', 'textures', 'background']
 var cached_sign_load = {}
 
 var LevelStyleData = {
+	0: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	1: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
 	2: {
 		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
 		'wall_tex': [
@@ -13,7 +31,70 @@ var LevelStyleData = {
 		'fake_wall_tex': [
 			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
 		],
-	}
+	},
+	3: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	4: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	5: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	6: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	7: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	8: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
+	9: {
+		'floor_tex': ["woodfloor1", "woodfloor2", "woodfloor3", "woodfloor4"],
+		'wall_tex': [
+			'Woodwalltop1', '', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a', 'woodwallside1a',
+		],
+		'fake_wall_tex': [
+			'Woodwalltop1', '', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a', 'woodwallside3a',
+		],
+	},
 }
 var level_style = 2
 
@@ -115,6 +196,9 @@ func make_game_node_from_int32(wld, int32, pos):
 			data.set_attribute("Player", int32)
 			data.set_attribute("PlayerOwned", 1)
 			data.set_id(int(GameNodeIds.GameNodeID.TestPlayer))
+		### Exit ###
+		6:
+			data.set_id(int(GameNodeIds.GameNodeID.WSWExit))
 		### Boxes ###
 		9:  # Wooden Box
 			data.set_id(int(GameNodeIds.GameNodeID.WoodenBox))

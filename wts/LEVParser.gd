@@ -92,7 +92,7 @@ func make_game_node_from_int32(wld, int32, pos):
 		4:  # Steel Box
 			return
 		5:  # Exit
-			return
+			data.set_id(int(GameNodeIds.GameNodeID.WSWExit))
 		6:  # Rainbow Coin
 			return
 		7:  # Coily
