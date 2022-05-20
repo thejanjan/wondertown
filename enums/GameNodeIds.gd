@@ -14,6 +14,7 @@ enum GameNodeID {
 	WSWExit = 6
 	WSWRainbowCoin = 7
 	WSWBonusCoin = 8
+	WSWCoinGate = 9
 }
 
 
@@ -26,6 +27,7 @@ const GameNodeIDInstances = {
 	GameNodeID.WSWExit: preload("res://nodes/game_nodes/WSWExit.tscn"),
 	GameNodeID.WSWRainbowCoin: preload("res://nodes/game_nodes/WSWRainbowCoin.tscn"),
 	GameNodeID.WSWBonusCoin: preload("res://nodes/game_nodes/WSWBonusCoin.tscn"),
+	GameNodeID.WSWCoinGate: preload("res://nodes/game_nodes/WSWCoinGate.tscn"),
 }
 
 

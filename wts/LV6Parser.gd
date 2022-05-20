@@ -211,6 +211,11 @@ func make_game_node_from_int32(wld, int32, pos):
 		['Sign', ..]:
 			data.set_attribute("Dialogue", int32[1])
 			data.set_id(int(GameNodeIds.GameNodeID.Sign))
+		### Toll Gate ###
+		['TollGate', ..]:
+			var direction = int32[1]
+			data.set_attribute("Direction", direction)
+			data.set_id(int(GameNodeIds.GameNodeID.WSWCoinGate))
 		### Undefined ###
 		_:
 			return
@@ -229,10 +234,17 @@ func make_tile_node_from_int32(wld, int32, pos):
 	
 	# The big data populator
 	match int32:
-		### Player Characters ###
+		### Floors ###
 		100, 101, 102, 103:
 			data.set_properties(0, 0)
 			data.set_tex([LevelStyleData[level_style]['floor_tex'][int32 - 100], '', '', '', '', ''])
+		### Things that can spawn on floors ###
+		1000, 1001:
+			data.set_properties(0, 0)
+			data.set_tex([LevelStyleData[level_style]['floor_tex'][0], '', '', '', '', ''])
+			match int32:
+				1000, 1001:
+					make_game_node_from_int32(wld, ["TollGate", int32], pos)
 		### Walls ###
 		200, 201, 202, 203:
 			data.set_properties(1, 1)
