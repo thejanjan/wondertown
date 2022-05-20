@@ -8,6 +8,7 @@ It will find a LevelTileset node, and then interface with it
 in order create an entire level instance.
 """
 
+const WSWGUI = preload("res://nodes/bases/WSWGUI.tscn")
 const GeneralTile = preload("res://nodes/tile_nodes/GeneralTile.tscn")
 
 const WondertownLevelData = preload("res://wts/WondertownLevelData.gd")
@@ -69,6 +70,11 @@ func build_level():
 	# Build game nodes and tile data.
 	_build_game_nodes()
 	_build_tile_data(self._level_data)
+	
+	# Add game GUI.
+	var gui = WSWGUI.instance()
+	add_child(gui)
+	gui.set_level_dict(WSWGUI)
 
 func _build_game_nodes():
 	"""
