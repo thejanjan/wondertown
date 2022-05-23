@@ -8,56 +8,11 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Node",
-"class": "Barrier",
-"language": "GDScript",
-"path": "res://network/util/Barrier.gd"
-}, {
-"base": "Spatial",
-"class": "GameNode",
-"language": "GDScript",
-"path": "res://nodes/bases/GameNode.gd"
-}, {
-"base": "Spatial",
-"class": "TileNode",
-"language": "GDScript",
-"path": "res://nodes/bases/TileNode.gd"
-}, {
-"base": "Node",
-"class": "WondertownLevelData",
-"language": "GDScript",
-"path": "res://wts/WondertownLevelData.gd"
-} ]
-_global_script_class_icons={
-"Barrier": "",
-"GameNode": "",
-"TileNode": "",
-"WondertownLevelData": ""
-}
-
 [application]
 
 config/name="wondertown"
-run/main_scene="res://network/lobby.tscn"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-GameNodeIds="*res://enums/GameNodeIds.gd"
-TileEnums="*res://enums/TileEnums.gd"
-
-[debug]
-
-multirun/number_of_windows=2
-multirun/window_distance=1270
-multirun/add_custom_args=false
-multirun/first_window_args="listen"
-multirun/other_window_args="join"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
 
 [physics]
 

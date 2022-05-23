@@ -7,6 +7,12 @@ each tileset index into an instanced scene.
 """
 
 
+var _tile_to_scene = {
+	0: preload("res://level/level_entities/simple_block.tscn"),
+	1: preload("res://level/level_entities/player.tscn"),
+}
+
+
 func get_tile_mapping():
 	"""
 	Creates a dictionary tile mapping, containing
@@ -16,11 +22,11 @@ func get_tile_mapping():
 	var tile_mapping = {}
 	
 	# Populate mapping with array2ds.
-	for id in GameNodeIds.GameNodeIDInstances:
+	for id in self._tile_to_scene:
 		tile_mapping[id] = []
 	
 	# Populate tile mapping with tile vec2ds.
-	for id in GameNodeIds.GameNodeIDInstances:
+	for id in self._tile_to_scene:
 		# kinda gross hack to work with walls
 		var vec2d_array = []
 		if id == 0:
@@ -40,4 +46,4 @@ func get_instance(tile_id):
 	"""
 	Gets an instance from a tile id.
 	"""
-	return GameNodeIds.make_instance(tile_id)
+	return self._tile_to_scene[tile_id].instance()

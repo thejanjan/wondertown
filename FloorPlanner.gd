@@ -22,7 +22,7 @@ func _ready():
 	for i in x_count:
 		for j in z_count:
 			# Spawn a block at each coordinate.
-			var block = preload("res://nodes/game_nodes/simple_block.tscn").instance();
+			var block = preload("res://simple_block.tscn").instance();
 			self.add_child(block);
 			block.translation.x = x_start + (i * x_offset);
 			block.translation.z = z_start + (j * z_offset);
